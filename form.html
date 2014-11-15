@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
     <script src="js/form.js"></script>
 </head>
 
@@ -27,8 +29,281 @@
             </ul>
         </section>
         <section id="form">
+            <div id="tabs">
+                <ul>
+                    <li><a href="#outcome1"><span>CAC-A/EAC-B</span></a></li>
+                    <li><a href="#outcome2"><span>CAC-C</span></a></li>
+                    <li><a href="#outcome3"><span>EAC-G</span></a></li>
+                </ul>
+                <div id="outcome1">
+                    <article class="form_tabs">
+                        <h3>CAC-A/EAC-B: DESIGN a system, component, or process</h3>
+                        <h4>Computer Science Undergrads:</h4>
+                        <table class="report_table">
+                            <tr>
+                                <th></th>
+                                <th>1 (Weak)</th>
+                                <th>2 (Poor)</th>
+                                <th>3 (Good)</th>
+                                <th>4 (Excellent)</th>
+                                <th>Students Left</th>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to DERIVE requirements from problem</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to identify design constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Produce a DESIGN that satisfies constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                        </table>
+                        <p>CS Students: Garcia, Horst, Kim, Meng[CpE], Vickers</p>
+                        <h4>Computer Engineering Undergrads:</h4>
+                        <table class="report_table">
+                            <tr>
+                                <th></th>
+                                <th>1 (Weak)</th>
+                                <th>2 (Poor)</th>
+                                <th>3 (Good)</th>
+                                <th>4 (Excellent)</th>
+                                <th>Students Left</th>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to DERIVE requirements from problem</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to identify design constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Produce a DESIGN that satisfies constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>3</td>
+                            </tr>
+                        </table>
+                        <p>CpE Students: Appel, Halac, Meng[CpE]</p>
+                        <p>The above evaluation is based on:</p>
+                        <textarea rows="4" cols="50"></textarea>
+                    </article>
+                </div>
+                <div id="outcome2">
+                    <article class="form_tabs">
+                        <h3>CAC-C: Work in teams</h3>
+                        <h4>Computer Science Undergrads:</h4>
+                        <table class="report_table">
+                            <tr>
+                                <th></th>
+                                <th>1 (Weak)</th>
+                                <th>2 (Poor)</th>
+                                <th>3 (Good)</th>
+                                <th>4 (Excellent)</th>
+                                <th>Students Left</th>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to DERIVE requirements from problem</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to identify design constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Produce a DESIGN that satisfies constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to identify design constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>3</td>
+                            </tr>
+                        </table>
+                        <p>CS Students: Garcia, Horst, Kim, Meng[CpE], Vickers</p>
+                        <p>The above evaluation is based on:</p>
+                        <textarea rows="4" cols="50"></textarea>
+                    </article>
+                </div>
+                <div id="outcome3">
+                    <article class="form_tabs">
+                        <h3>EAC-G: Be a Computer Engineer</h3>
+                        <h4>Computer Engineering Undergrads:</h4>
+                        <table class="report_table">
+                            <tr>
+                                <th></th>
+                                <th>1 (Weak)</th>
+                                <th>2 (Poor)</th>
+                                <th>3 (Good)</th>
+                                <th>4 (Excellent)</th>
+                                <th>Students Left</th>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to DERIVE requirements from problem</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <th class="v_table_header">Able to identify design constraints</th>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>
+                                    <input type="number" name="points" min="0" max="5" step="1" value="0">
+                                </td>
+                                <td>3</td>
+                            </tr>
+                        </table>
+                        <p>CpE Students: Appel, Halac, Meng[CpE]</p>
+                        <textarea rows="4" cols="50"></textarea>
+                    </article>
+                </div>
+            </div>
+            <div class="buttonHolder">
+                <input type="submit" value="Save" class="button" />
+                <input type="submit" value="Submit" class="button" />
+            </div>
         </section>
     </main>
 </body>
 
 </html>
+
+

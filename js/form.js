@@ -3,4 +3,5 @@ $(document).on('ready', function() {
 		$('.side_bar ul li').removeClass('selected');
 		$(this).addClass('selected');
 	});
+	$( "#tabs" ).tabs();
 });
