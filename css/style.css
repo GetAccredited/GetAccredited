@@ -21,6 +21,7 @@ header {
     border-bottom: 2px solid rgba(0, 104, 147, 1);
     padding: 7px 15px 5px 15px;
     height: 50px;
+    line-height: 50px;
 }
 
 main {
@@ -67,6 +68,7 @@ form#login {
     position: relative;
     top: 50%;
     margin-top: -155px;
+    white-space: normal;
 }
 
 input {
@@ -105,6 +107,8 @@ input {
     border-right: 2px solid rgba(188, 226, 239, 1);
     display: inline-block;
     vertical-align: top;
+    position: fixed;
+    z-index: 1;
 }
 
 .side_bar ul {
@@ -135,6 +139,8 @@ input {
 #report {
     display: inline-block;
     vertical-align: top;
+    position: relative;
+    left: 300px;
 }
 
 .outcome_report {
