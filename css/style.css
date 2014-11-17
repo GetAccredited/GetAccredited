@@ -73,6 +73,9 @@ form#login {
 
 input {
     font-family: 'Oxygen', sans-serif;
+}
+
+form#login input {
     padding: 5px;
     margin: 15px;
     width: 300px;
@@ -193,6 +196,11 @@ table.report_table .v_table_header {
     left: 305px;
 }
 
+#tabs {
+    font-size: 1em;
+    font-family: 'Oxygen', sans-serif;
+}
+
 #form .ui-widget-content{
     border: none;
     background: none;
@@ -229,7 +237,7 @@ textarea{
 
 #form .buttonHolder{
     position: absolute;
-    bottom:0px;
+    bottom: 8px;
     right: 0px;
     left: 305px;
 }
