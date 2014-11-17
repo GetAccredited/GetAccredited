@@ -26,9 +26,9 @@ header {
 
 main {
     position: absolute;
-    top: 63.111px;
+    top: 64px;
     bottom: 0;
-    height: calc(100% - 63.111px);
+    height: calc(100% - 64px);
     width: 100%;
     overflow-x: auto;
     white-space: nowrap;
@@ -144,6 +144,7 @@ form#login input {
     vertical-align: top;
     position: relative;
     left: 300px;
+    padding: 10px 14px;
 }
 
 .outcome_report {
@@ -208,26 +209,35 @@ table.report_table .v_table_header {
 }
 
 #form .ui-tabs-panel{
-    background: rgba(211, 215, 224, 1);
+    background: rgba(231, 235, 244, 1);
     height: 100%;
-    padding-right: 3px;s
+    padding-right: 3px;
 }
 
 #form .ui-state-active{
-    background: rgba(211, 215, 224, 1);
+    background: rgba(231, 235, 244, 1);
+    border: none;
 }
 
 #form .ui-tabs-nav{
     background: rgba(250, 250, 253, 1);
     border: none;
+    margin-left: -3px;
 }
 
 #form .ui-state-default:not(.ui-state-active){
     background: rgba(77, 160, 200, 1);
+    border: none;
+}
+
+#form .ui-state-default:not(.ui-state-active) a {
+    color: rgba(250, 250, 253, 1);
 }
 
 textarea{
     resize: none;
+    width: 842px;
+    border: none;
 }
 
 .form_tabs {
@@ -235,13 +245,33 @@ textarea{
     overflow-y:auto;
 }
 
-#form .buttonHolder{
+#form .buttonHolder {
     position: absolute;
     bottom: 8px;
-    right: 0px;
-    left: 305px;
+    width: 100%;
+    text-align: center;
+}
+
+#form .buttonHolder input {
+    margin: 0px 10px;
 }
 
 #form table input{
     width: 40px;
+}
+
+table.report_table tr:first-of-type th:last-of-type {
+    background-color: rgba(47, 130, 170, 1);
+}
+
+table.report_table td:last-of-type {
+    background-color: #dddddd;
+}
+
+table.report_table th:not(:first-of-type) {
+    width: 100px;
+}
+
+.notes {
+    margin-top: 35px;
 }
