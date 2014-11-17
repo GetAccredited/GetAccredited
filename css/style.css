@@ -238,6 +238,7 @@ textarea{
     resize: none;
     width: 842px;
     border: none;
+    margin-bottom: 20px;
 }
 
 .form_tabs {
@@ -258,6 +259,10 @@ textarea{
 
 #form table input{
     width: 40px;
+}
+
+#form table.report_table {
+    width: 846px;
 }
 
 table.report_table tr:first-of-type th:last-of-type {
