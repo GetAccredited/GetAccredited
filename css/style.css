@@ -75,7 +75,7 @@ input {
     font-family: 'Oxygen', sans-serif;
 }
 
-form#login input {
+form#login input:not(.button) {
     padding: 5px;
     margin: 15px;
     width: 300px;
@@ -85,12 +85,12 @@ form#login input {
     border-radius: 3px;
 }
 
-#login_email {
-    margin-top: 45px;
+form#login #login_email {
+    margin-top: 40px;
 }
 
-#login_password {
-    margin-bottom: 20px;
+form#login #login_password {
+    margin-bottom: 35px;
 }
 
 /*
