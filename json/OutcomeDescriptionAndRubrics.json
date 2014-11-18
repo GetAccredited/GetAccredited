@@ -1,16 +1,18 @@
-"OutcomeDescriptionAndRubrics": [
-  {
-    "type": "CAC",
-    "outcome": "A",
-    "description": "Written Communication",
-    "rubrics": ["Ability to write a sentence",
-              "Able to compose a paragraph"]
-  },
-  {
-    "type": "EAC",
-    "outcome": "D",
-    "description": "Written Communication",
-    "rubrics": ["Ability to compose a sentence",
-              "Able to write a paragraph"]
-  }
-]
+{
+  "OutcomeDescriptionAndRubrics": [
+    {
+      "type": "CAC",
+      "outcome": "A",
+      "description": "Written Communication",
+      "rubrics": ["Ability to write a sentence",
+                "Able to compose a paragraph"]
+    },
+    {
+      "type": "EAC",
+      "outcome": "D",
+      "description": "Written Communication",
+      "rubrics": ["Ability to compose a sentence",
+                "Able to write a paragraph"]
+    }
+  ]
+}

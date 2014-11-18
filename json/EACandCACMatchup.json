@@ -1,10 +1,23 @@
-"EACandCACMatchup": [ 
-  {
-    "CAC": "A",
-    "EAC": "D"
-  }, 
-  {
-    "CAC": "C",
-    "EAC": "E"
-  } 
-]
+{
+    "EACandCACMatchup": [
+
+        {"EAC": "C", "CAC": "C"},
+
+        {"EAC": "F", "CAC": "E"},
+
+        {"EAC": "G", "CAC": "F"},
+
+        {"EAC": "K", "CAC": "I"},
+
+        {"EAC": "A", "CAC": "A"},
+
+        {"EAC": "D", "CAC": "D"},
+
+        {"EAC": "I", "CAC": "H"},
+
+        {"EAC": "E", "CAC": "B"},
+
+        {"EAC": "H", "CAC": "G"}
+
+    ]
+}
