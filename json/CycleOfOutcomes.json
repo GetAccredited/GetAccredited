@@ -1,0 +1,12 @@
+"CycleOfOutcomes": [ 
+  {
+    "semester": "Fall2014", 
+    "CACOutcomes": ["A", "C", "D"], 
+    "EACOutcomes": ["D", "E", "G"] 
+  }, 
+  {
+    "semester": "Spring2015", 
+    "CACOutcomes": ["A", "C", "D"], 
+    "EACOutcomes": ["D", "E", "G"]
+  } 
+]

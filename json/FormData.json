@@ -1,0 +1,35 @@
+"FormData": {
+  "semester": "Fall2014", 
+  "course": "cse3342",
+  "instructor": "coyle",
+  "results": [
+    {
+      "type": "CAC",
+      "outcome": "A",
+      "numbers": [
+        [1, 0, 0, 1],
+        [0, 1, 0, 1]
+      ],
+      "notes": "Notes notes notes"
+    },
+    {
+      "type": "CAC",
+      "outcome": "C",
+      "numbers": [
+        [1, 0, 0, 1],
+        [0, 1, 0, 1],
+        [0, 0, 1, 1]
+      ],
+      "notes": "Notes notes notes"
+    }, 
+    {
+      "type": "EAC",
+      "outcome": "D",
+      "numbers": [
+        [1, 0, 0, 1],
+        [0, 1, 0, 1]
+      ],
+      "notes": "Notes notes notes"
+    }
+  ]
+}

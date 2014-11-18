@@ -1,4 +1,6 @@
 $(document).on('ready', function() {
+	populateOutcomesForSemester(getSemester());
+
 	$(document).on('click', '.side_bar ul li', function(event) {
 		if($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
@@ -8,3 +10,10 @@ $(document).on('ready', function() {
 		}
 	});
 });
+
+function populateOutcomesForSemester(semester) {
+	$.ajax({
+	  type: "GET",
+	  url: "json/CycleOfOutcomes.json"
+	});
+}

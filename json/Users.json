@@ -1,0 +1,20 @@
+"users": [
+  {
+    "name": "Frank Coyle",
+    "email": "coyle@smu.edu",
+    "password": "iteachcomputerscience",
+    "type": "instructor"
+  },
+  {
+    "name": "Gloria Hart",
+    "email": "ghart@smu.edu",
+    "password": "ImBoYo",
+    "type": "insructor"
+  },
+  {
+    "name": "Harry Potter",
+    "email": "mfonten@abet.com",
+    "password": "seespotrun",
+    "type": "admin",
+  }
+]
