@@ -1,18 +1,173 @@
 {
   "OutcomeDescriptionAndRubrics": [
     {
-      "type": "CAC",
+      "type": "EAC",
       "outcome": "A",
-      "description": "Written Communication",
-      "rubrics": ["Ability to write a sentence",
-                "Able to compose a paragraph"]
+      "description": "An ability to apply knowledge of mathematics, science, and engineering.",
+      "rubrics": [ "Applications: Mathematics",
+                   "Applications: Science",
+                   "Mathematical Modeling" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "B",
+      "description": "An ability to design and conduct experiments, as well as to analyze and interpret data.",
+      "rubrics": [ "Design Experiments",
+                   "Conduct Experiments",
+                   "Analyze Data",
+                   "Interpret Data" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "C",
+      "description": "An ability to design a system, component, or process to meet desired needs within realistic constraints such as economic, environmental, social, political, ethical, health and safety, manufacturability, and sustainability.",
+      "rubrics": [ "Develop design requirements from the problem statement that meet desired needs",
+                   "Identify relevant, realistic design constraints from the design requirements",
+                   "Produce a design that satisfies design requirements within relevant, realistic constraints" ]
     },
     {
       "type": "EAC",
       "outcome": "D",
-      "description": "Written Communication",
-      "rubrics": ["Ability to compose a sentence",
-                "Able to write a paragraph"]
-    }
+      "description": "An ability to function on multidisciplinary teams.",
+      "rubrics": [ "Contribution to team effort",
+                   "Team communication",
+                   "Support of team members",
+                   "Addressing conflict" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "E",
+      "description": "An ability to identify, formulate, and solve engineering problems.",
+      "rubrics": [ "Identify problem",
+                   "Formulate problem",
+                   "Solve problem" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "F",
+      "description": "Understanding of professional and ethical responsibility.",
+      "rubrics": [ "Knowledge of the code of ethics in the discipline",
+                   "Recognize the ethical dimension of an issue in the discipline" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "G",
+      "description": "Ability to communicate effectively",
+      "rubrics": [ "Written: Content",
+                   "Written: Structure and Mechanics",
+                   "Oral: Content",
+                   "Oral: Delivery" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "H",
+      "description": "The broad education necessary to understand the impact of engineering solutions in a global, economic, environmental and societal context.",
+      "rubrics": [ "Global context",
+                   "Economic context",
+                   "Environmental context",
+                   "Societal context" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "I",
+      "description": "Recognition of the need for, and an ability to engage in life-long learning.",
+      "rubrics": [ "Identify incentives for life-long learning",
+                   "Identify sources of knowledge" ]
+    },
+    {
+      "type": "EAC",
+      "outcome": "J",
+      "description": "A knowledge of contemporary issues.",
+      "rubrics": [ "Current technological events in the discipline",
+                   "Awareness of emerging technologies in the discipline" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "A",
+      "description": "An ability to apply knowledge of computing and mathematics appropriate to the discipline.",
+      "rubrics": [ "Terms",
+                   "Calculation",
+                   "Application: Mathematics",
+                   "Mathematical Modeling",
+                   "Theory" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "B",
+      "description": "An ability to analyze a problem, and identify and define the computing requirements appropriate to its solution.",
+      "rubrics": [ "Demonstrates an ability to analyze a problem, and identify and define the computing requirements appropriate to its solution" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "C",
+      "description": "An ability to design, implement, and evaluate a computer-based system, process, component, or program to meet desired needs.",
+      "rubrics": [ "Develop design requirements from the problem statement that meet desired needs",
+                   "Identify relevant, realistic design constraints from the design requirements",
+                   "Produce a design that satisfies design requirements within relevant, realistic constraints" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "D",
+      "description": "An ability to function effectively on teams to accomplish a common goal.",
+      "rubrics": [ "Contribution to team effort",
+                   "Quality of contribution to the team effort",
+                   "Contributions to team discussions",
+                   "Contributions to team decisions",
+                   "Preparation for team meetings",
+                   "Attendance at team meetings",
+                   "Support of team members",
+                   "Response to conflict" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "E",
+      "description": "An understanding of professional, ethical, legal, security and social issues and responsibilities",
+      "rubrics": [ "Knowledge of the code of ethics in the discipline",
+                   "Recognize the ethical dimension of an issue in the discipline" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "F",
+      "description": "An ability to communicate effectively with a range of audiences.",
+      "rubrics": [ "Written: Content",
+                   "Written: Structure and Mechanics",
+                   "Oral: Content",
+                   "Oral: Delivery" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "G",
+      "description": "An ability to analyze the local and global impact of computing on individuals, organizations, and society.",
+      "rubrics": [ "Demonstrates an ability to analyze the local impact of computing on individuals, organizations, and society.",
+                   "Demonstrates an ability to analyze the global impact of computing on individuals, organizations, and society." ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "H",
+      "description": "Recognition of the need for and an ability to engage in continuing professional development.",
+      "rubrics": [ "Professional development activities",
+                   "Transfer materials and/or concepts",
+                   "Reference material sources" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "I",
+      "description": "An ability to use current techniques, skills, and tools necessary for computing practice.",
+      "rubrics": [ "Demonstrates an appropriate skill level using a given technique for computing practice",
+                   "Demonstrates an appropriate skill level using a given modern (current) tool for computing practice" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "J",
+      "description": "An ability to apply mathematical foundations, algorithmic principles, and computer science theory in the modeling and design of computer-based systems in a way that demonstrates comprehension of the tradeoffs involved in design choices.",
+      "rubrics": [ "Demonstrates an ability to apply mathematical foundations to computer-based systems in a way that demonstrates tradeoffs in design choices",
+                   "Demonstrates an ability to apply algorithmic principles and computer science theory to computer-based systems in a way that demonstrates tradeoffs in design choices" ]
+    },
+    {
+      "type": "CAC",
+      "outcome": "K",
+      "description": "Able to apply design and development principles in the construction of software of varying complexity",
+      "rubrics": [ "Demonstrates an ability to apply design and development principles in the construction of software of varying complexity" ]
+    },
   ]
 }
