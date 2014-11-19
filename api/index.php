@@ -1,12 +1,28 @@
 <?php 
+$dbhost = "localhost";
+$dbname = "getaccredited";
+
 require 'Slim/Slim.php';
-    
+
 $app = new Slim();
 
-$app->get('/hello/:name', 'helloWorld');
+$m = new MongoClient("mongodb://$dbhost");
+$db = $m->$dbname;
+
+$app->get('/getUser', 'getUser');
 $app->run();
 
-function helloWorld($name) {
-    echo "Hello " . $name;
+function getUser() {
+    global $db;
+
+    $users = $db->users;
+
+    $user = array(
+        'email' => 'coyle@smu.edu',
+        'password' => 'asdfasdf'
+    );
+
+    $user = $users->findOne($user);
+    var_dump($user);
 }
 ?>
