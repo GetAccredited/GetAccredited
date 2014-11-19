@@ -1,5 +1,4 @@
-{
-    "EACandCACMatchup": [
+[
 
         {"EAC": "C", "CAC": "C"},
 
@@ -19,5 +18,4 @@
 
         {"EAC": "H", "CAC": "G"}
 
-    ]
-}
+]

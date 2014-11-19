@@ -1,20 +1,18 @@
-{
-  "RosterWithOutcomes": [
-    {
-      "course": "cse3342",
-      "instructor": "coyle", 
-      "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
-      "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"], 
-      "CACOutcomes": ["A", "C"],
-      "EACOutcomes": ["D", "E", "G"] 
-    }, 
-    {
-      "course": "cse5343", 
-      "instructor": "fontenot", 
-      "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
-      "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"],  
-      "CACOutcomes": ["C", "D"], 
-      "EACOutcomes": ["D"] 
-    } 
-  ]
-}
+[
+  {
+    "course": "cse3342",
+    "instructor": "coyle", 
+    "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
+    "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"], 
+    "CACOutcomes": ["A", "C"],
+    "EACOutcomes": ["D", "E", "G"] 
+  }, 
+  {
+    "course": "cse5343", 
+    "instructor": "fontenot", 
+    "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
+    "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"],  
+    "CACOutcomes": ["C", "D"], 
+    "EACOutcomes": ["D"] 
+  } 
+]

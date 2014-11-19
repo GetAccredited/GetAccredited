@@ -1,34 +1,32 @@
-{
-    "CycleOfOutcomes": [
-        {
-            "semester": "Fall2014",
-            "CACOutcomes": ["A", "H", "D"],
-            "EACOutcomes": ["A", "D", "I"]
-        },
-        {
-            "semester": "Spring2015",
-            "CACOutcomes": ["A", "H", "D"],
-            "EACOutcomes": ["A", "D", "I"]
-        },
-        {
-            "semester": "Fall2015",
-            "CACOutcomes": ["B", "G", "J", "K"],
-            "EACOutcomes": ["H", "E", "B", "G"]
-        },
-        {
-            "semester": "Spring2016",
-            "CACOutcomes": ["B", "G", "J", "K"],
-            "EACOutcomes": ["H", "E", "B", "G"]
-        },
-        {
-            "semester": "Fall2016",
-            "CACOutcomes": ["C", "E", "F"],
-            "EACOutcomes": ["C", "F", "G"]
-        },
-        {
-            "semester": "Spring2017",
-            "CACOutcomes": ["C", "E", "F"],
-            "EACOutcomes": ["C", "F", "G"]
-        }
-    ]
-}
+[
+    {
+        "semester": "Fall2014",
+        "CACOutcomes": ["A", "H", "D"],
+        "EACOutcomes": ["A", "D", "I"]
+    },
+    {
+        "semester": "Spring2015",
+        "CACOutcomes": ["A", "H", "D"],
+        "EACOutcomes": ["A", "D", "I"]
+    },
+    {
+        "semester": "Fall2015",
+        "CACOutcomes": ["B", "G", "J", "K"],
+        "EACOutcomes": ["H", "E", "B", "G"]
+    },
+    {
+        "semester": "Spring2016",
+        "CACOutcomes": ["B", "G", "J", "K"],
+        "EACOutcomes": ["H", "E", "B", "G"]
+    },
+    {
+        "semester": "Fall2016",
+        "CACOutcomes": ["C", "E", "F"],
+        "EACOutcomes": ["C", "F", "G"]
+    },
+    {
+        "semester": "Spring2017",
+        "CACOutcomes": ["C", "E", "F"],
+        "EACOutcomes": ["C", "F", "G"]
+    }
+]
