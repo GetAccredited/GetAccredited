@@ -5,91 +5,16 @@
       "instructor": "coyle", 
       "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
       "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"], 
-      "outcomes": [
-        {
-          "type":"CAC",
-          "outcome":"A",
-          "description": "An ability to apply knowledge of mathematics, science, and engineering.",
-          "rubrics": [ "Applications: Mathematics",
-                      "Applications: Science",
-                      "Mathematical Modeling" ]
-        },
-        {
-          "type":"CAC",
-          "outcome":"C",
-          "description": "An ability to design a system, component, or process to meet desired needs within realistic constraints such as economic, environmental, social, political, ethical, health and safety, manufacturability, and sustainability.",
-          "rubrics": [ "Develop design requirements from the problem statement that meet desired needs",
-                   "Identify relevant, realistic design constraints from the design requirements",
-                   "Produce a design that satisfies design requirements within relevant, realistic constraints" ]
-        },
-        {
-          "type":"EAC",
-          "outcome":"D",
-          "description": "An ability to function on multidisciplinary teams.",
-          "rubrics": [ "Contribution to team effort",
-                   "Team communication",
-                   "Support of team members",
-                   "Addressing conflict" ]
-        },
-        {
-          "type":"EAC",
-          "outcome":"E",
-          "description": "An ability to identify, formulate, and solve engineering problems.",
-          "rubrics": [ "Identify problem",
-                   "Formulate problem",
-                   "Solve problem" ]
-        },
-        {
-          "type":"EAC",
-          "outcome":"G",
-          "description": "Ability to communicate effectively",
-          "rubrics": [ "Written: Content",
-                   "Written: Structure and Mechanics",
-                   "Oral: Content",
-                   "Oral: Delivery" ]
-        }
-      ]
+      "CACOutcomes": ["A", "C"],
+      "EACOutcomes": ["D", "E", "G"] 
     }, 
     {
       "course": "cse5343", 
       "instructor": "fontenot", 
       "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
       "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"],  
-      "outcomes": [
-        {
-          "type":"CAC",
-          "outcome":"C",
-          "description": "An ability to design a system, component, or process to meet desired needs within realistic constraints such as economic, environmental, social, political, ethical, health and safety, manufacturability, and sustainability.",
-          "rubrics": [ "Develop design requirements from the problem statement that meet desired needs",
-                   "Identify relevant, realistic design constraints from the design requirements",
-                   "Produce a design that satisfies design requirements within relevant, realistic constraints" ]
-        },
-        {
-          "type":"EAC",
-          "outcome":"E",
-          "description": "An ability to identify, formulate, and solve engineering problems.",
-          "rubrics": [ "Identify problem",
-                   "Formulate problem",
-                   "Solve problem" ]
-        },
-        {
-          "type":"EAC",
-          "outcome":"G",
-          "description": "Ability to communicate effectively",
-          "rubrics": [ "Written: Content",
-                   "Written: Structure and Mechanics",
-                   "Oral: Content",
-                   "Oral: Delivery" ]
-        }
-      ]
-    },
-    {
-      "course": "cse4345",
-      "instructor": "coyle", 
-      "studentsCAC": ["Jessica Yeh", "Story Zanetti"],
-      "studentsEAC": ["Jordan Kayse"], 
-      "CACOutcomes": ["H", "I"],
-      "EACOutcomes": ["D", "E"] 
-    }
+      "CACOutcomes": ["C", "D"], 
+      "EACOutcomes": ["D"] 
+    } 
   ]
 }
