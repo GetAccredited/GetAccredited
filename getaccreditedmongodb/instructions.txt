@@ -1,0 +1,17 @@
+Instructions to enter the data into mongodb.
+
+1) Create a folder in the data folder you created called backup.
+	For example mine is: C:\data\backup
+
+2) Move the getaccredited folder into the backup folder.
+
+3) Go to the bin where the mongodb executables are in terminal/command prompt
+	ex: "cd c:\Program Files\MongoDB 2.6 Standard\bin"
+
+4) Call the mongorestore function with the name of the database and the folder where the backup is.
+	ex: "mongorestore --db getaccredited /data/backup/getaccredited"
+
+5)To test that it worked, go into the mongo shell and say
+	"use getaccredited" then "show collections"
+
+6) There should be collections like users, and formdata.
