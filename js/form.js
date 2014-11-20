@@ -18,15 +18,18 @@ $(document).on('ready', function() {
 
 function getCourses(callback) {
 	$.ajax({
-        type: "GET",
-        url: "json/courses.json",
+        type: "POST",
+        url: "api/getCourses",
+        data: {
+        	//eventually replace with instructors name
+            instructor: 'coyle',
+        },
         success: function(output) {
-            output = output.courses;
+        	output = JSON.parse(output);
+            output = output.RosterWithOutcomes;
 
             for(var i = 0; i < output.length; i++) {
-            	if(output[i].instructor === user) {
-            		courses.push(output[i]);
-            	}
+            	courses.push(output[i]);
             }
 
             callback();
