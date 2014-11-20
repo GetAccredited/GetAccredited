@@ -45,7 +45,7 @@ function getCourses() {
     $instructor = Slim::getInstance()->request()->post('instructor');
 
     $classRoster = $db->rosterwithoutcomes;
-    $courses = $classRoster->find(array('instructor' => $instructor), array('course'));
+    $courses = $classRoster->find(array('instructor' => $instructor), array('course', '_id'=>0));
 
     echo '{"RosterWithOutcomes": [ ';
     $i = 0;
