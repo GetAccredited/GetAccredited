@@ -142,8 +142,8 @@ form#login #login_password {
     display: inline-block;
     vertical-align: top;
     position: fixed;
+    overflow-y: auto;
     z-index: 1;
-    overflow-y: scroll;
 }
 
 .side_bar ul {
