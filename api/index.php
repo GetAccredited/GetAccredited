@@ -1,4 +1,5 @@
 <?php 
+
 $dbhost = "localhost";
 $dbname = "getaccredited";
 
@@ -9,10 +10,12 @@ $app = new Slim();
 $m = new MongoClient("mongodb://$dbhost");
 $db = $m->$dbname;
 
-$app->post('/getUser', 'getUser');
+$app->post('/getUserAndLogin', 'getUserAndLogin');
+$app->get('/getLoggedInUser', 'getLoggedInUser');
+$app->get('/logout', 'logout');
 $app->run();
 
-function getUser() {
+function getUserAndLogin() {
     global $db;
 
     // Get the email and password from the POST
@@ -27,7 +30,21 @@ function getUser() {
         'password' => $password
     );
 
-    $user = $users->findOne($user);
-    echo json_encode($user);
+    $user = json_encode($users->findOne($user));
+    $_SESSION['user'] = $user;
+    echo $user;
 }
+
+function getLoggedInUser() {
+    if (isset($_SESSION['user'])) {
+        echo $_SESSION['user'];
+    } else {
+        echo "null";
+    }
+}
+
+function logout() {
+    unset($_SESSION['user']);
+}
+
 ?>
