@@ -15,6 +15,7 @@ $app->get('/logout', 'logout');
 $app->post('/getForm', 'getForm');
 $app->post('/getCourses', 'getCourses');
 $app->get('/getOutcomes', 'getOutcomes');
+$app->post('/getSelectedOutcomes', 'getSelectedOutcomes');
 $app->run();
 
 
@@ -123,6 +124,18 @@ function getOutcomes() {
         echo json_encode($outcome);
     }
     echo ']}';
+    
+}
+
+function getSelectedOutcomes(){ 
+    global $db;
+
+    $semester = Slim::getInstance()->request()->post('semester');
+
+    $semesterOutcomes = $db->cycleofoutcomes;
+    $outcomes = $semesterOutcomes->findOne(array('semester' => $semester), array('CACOutcomes', 'EACOutcomes', '_id'=>0));
+
+    echo json_encode($outcomes);
     
 }
 
