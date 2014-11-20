@@ -1,3 +1,14 @@
+$(document).ready(function() {
+	$("#logout").click(function() {
+		$.ajax({
+			url: "api/logout",
+			success: function() {
+				window.location.href = "index.html";
+			}
+		});
+	});
+});
+
 function getSemester() {
 	var today = new Date();
 	var month = today.getMonth();

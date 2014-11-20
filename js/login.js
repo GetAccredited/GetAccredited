@@ -3,7 +3,7 @@ $(document).ready(function() {
         event.preventDefault();
         $.ajax({
             type: "POST",
-            url: "api/getUser",
+            url: "api/getUserAndLogin",
             data: { email: $("#login_email").val(), password: $("#login_password").val() },
             dataType: "json",
             success: function(result) {
