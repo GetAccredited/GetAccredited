@@ -67,7 +67,7 @@ function getOutcomes() {
     global $db;
 
     $outcomeDB = $db->outcomedescriptionandrubrics;
-    $outcomes = $outcomeDB->find(array(), array('type','outcome','description', 'id'=>0));
+    $outcomes = $outcomeDB->find(array(), array('type','outcome','description', '_id'=>0));
 
     echo '{"Outcomes": [ ';
     $i = 0;
