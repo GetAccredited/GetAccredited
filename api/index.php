@@ -34,7 +34,7 @@ function getForm() {
     $CACOutcomes = array_intersect($outcomes['CACOutcomes'], $course['CACOutcomes']);
     $EACOutcomes = array_intersect($outcomes['EACOutcomes'], $course['EACOutcomes']);
 
-    //not finished
+
 }
 
 
@@ -67,7 +67,7 @@ function getOutcomes() {
     global $db;
 
     $outcomeDB = $db->outcomedescriptionandrubrics;
-    $outcomes = $outcomeDB->find(array(), array('type','outcome','description'));
+    $outcomes = $outcomeDB->find(array(), array('type','outcome','description', 'id'=>0));
 
     echo '{"Outcomes": [ ';
     $i = 0;
@@ -96,7 +96,7 @@ function getLoggedInUser() {
 }
 
 
-function getUserAndLogin() {
+function getUserAndLogin(){
 
     global $db;
 
@@ -115,8 +115,6 @@ function getUserAndLogin() {
     $user = json_encode($users->findOne($user));
     $_SESSION['user'] = $user;
     echo $user;
-}
-
 }
 
 ?>
