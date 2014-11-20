@@ -1,4 +1,16 @@
 $(document).ready(function() {
+	$.ajax({
+		url: "api/getLoggedInUser",
+        dataType: "json",
+		success: function(user) {
+			if (user) {
+				$("#user").html(user.name);
+			} else {
+				$("#user").html("N/A");
+			}
+		}
+	});
+
 	$("#logout").click(function() {
 		$.ajax({
 			url: "api/logout",
