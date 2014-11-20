@@ -40,7 +40,7 @@ function getForm() {
     $EACOutcomes = array_intersect($outcomes['EACOutcomes'], $course['EACOutcomes']);
     $bothOutcomes = array();
     foreach($CACOutcomes as $CACOutcome) {
-        $match = $outcomeMatchups->findOne(array('CAC' => $CACOutcome), array('EAC','_id'=>0));
+        $match = $outcomeMatchups->findOne(array('CAC' => $CACOutcome), array('EAC'=>1,'_id'=>0));
         if(in_array($match["EAC"], $EACOutcomes)){
             array_push($bothOutcomes, array('EAC' => $match["EAC"], 'CAC'=>$CACOutcome));
         }
@@ -56,7 +56,7 @@ function getForm() {
         } else {
             $i++;
         }
-        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $bothOutcome['CAC']), array('description','rubrics', '_id'=>0));
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $bothOutcome['CAC']), array('description'=>1,'rubrics'=>1, '_id'=>0));
         echo '{"CAC" : "' . $bothOutcome['CAC'] . '", "EAC" : "' . $bothOutcome['EAC'] . '", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
     }
     foreach($CACOutcomes as $CACOutcome) {
@@ -65,7 +65,7 @@ function getForm() {
         } else {
             $i++;
         }
-        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description','rubrics', '_id'=>0));
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description'=>1,'rubrics'=>1, '_id'=>0));
         echo '{"CAC" : "' . $CACOutcome . '" , "EAC" : "none", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
     }
     foreach($EACOutcomes as $EACOutcome) {
@@ -74,7 +74,7 @@ function getForm() {
         } else {
             $i++;
         }
-        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description','rubrics', '_id'=>0));
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description'=>1,'rubrics'=>1, '_id'=>0));
         echo '{"CAC" : "none", "EAC" : "' . $EACOutcome . '", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
     }
     echo ']}';
@@ -89,7 +89,7 @@ function getCourses() {
     $instructor = Slim::getInstance()->request()->post('instructor');
 
     $classRoster = $db->rosterwithoutcomes;
-    $courses = $classRoster->find(array('instructor' => $instructor), array('course', '_id'=>0));
+    $courses = $classRoster->find(array('instructor' => $instructor), array('course'=>1, '_id'=>0));
 
     echo '{"RosterWithOutcomes": [ ';
     $i = 0;
@@ -111,7 +111,7 @@ function getOutcomes() {
     global $db;
 
     $outcomeDB = $db->outcomedescriptionandrubrics;
-    $outcomes = $outcomeDB->find(array(), array('type','outcome','description', '_id'=>0));
+    $outcomes = $outcomeDB->find(array(), array('type','outcome','description'=>1, '_id'=>0));
 
     echo '{"Outcomes": [ ';
     $i = 0;
@@ -133,7 +133,7 @@ function getSelectedOutcomes(){
     $semester = Slim::getInstance()->request()->post('semester');
 
     $semesterOutcomes = $db->cycleofoutcomes;
-    $outcomes = $semesterOutcomes->findOne(array('semester' => $semester), array('CACOutcomes', 'EACOutcomes', '_id'=>0));
+    $outcomes = $semesterOutcomes->findOne(array('semester' => $semester), array('CACOutcomes'=>1, 'EACOutcomes'=>1, '_id'=>0));
 
     echo json_encode($outcomes);
     
