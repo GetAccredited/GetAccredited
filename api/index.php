@@ -30,10 +30,53 @@ function getForm() {
     $classRoster = $db->rosterwithoutcomes;
     $course = $classRoster->findOne(array('course' => $course));
 
+    $outcomeDescription = $db->outcomedescriptionandrubrics;
+    $outcomeMatchups = $db->eacandcacmatchup;
+   
+
     //Gets the outcomes for the semester that the class has.
     $CACOutcomes = array_intersect($outcomes['CACOutcomes'], $course['CACOutcomes']);
     $EACOutcomes = array_intersect($outcomes['EACOutcomes'], $course['EACOutcomes']);
+    $bothOutcomes = array();
+    foreach($CACOutcomes as $CACOutcome) {
+        $match = $outcomeMatchups->findOne(array('CAC' => $CACOutcome), array('EAC','_id'=>0));
+        if(in_array($match["EAC"], $EACOutcomes)){
+            array_push($bothOutcomes, array('EAC' => $match["EAC"], 'CAC'=>$CACOutcome));
+        }
+    }
 
+
+    echo '{"studentsEAC" : '. json_encode($course['studentsEAC']) . ', "studentsCAC" : ' . json_encode($course['studentsCAC']);
+    echo ', "outcomes" : [';
+    $i = 0;
+    foreach($bothOutcomes as $bothOutcome) {
+        if($i != 0) {
+            echo ',';
+        } else {
+            $i++;
+        }
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $bothOutcome['CAC']), array('description','rubrics', '_id'=>0));
+        echo '{"CAC" : "' . $bothOutcome['CAC'] . '", "EAC" : "' . $bothOutcome['EAC'] . '", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
+    }
+    foreach($CACOutcomes as $CACOutcome) {
+        if($i != 0) {
+            echo ',';
+        } else {
+            $i++;
+        }
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description','rubrics', '_id'=>0));
+        echo '{"CAC" : "' . $CACOutcome . '" , "EAC" : "none", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
+    }
+    foreach($EACOutcomes as $EACOutcome) {
+        if($i != 0) {
+            echo ',';
+        } else {
+            $i++;
+        }
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description','rubrics', '_id'=>0));
+        echo '{"CAC" : "none", "EAC" : "' . $EACOutcome . '", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
+    }
+    echo ']}';
 
 }
 
