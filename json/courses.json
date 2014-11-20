@@ -1,0 +1,111 @@
+{
+  "courses": [
+    {
+      "course": "cse3342",
+      "instructor": "coyle", 
+      "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
+      "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"], 
+      "outcomes": [
+        {
+          "CAC":"A",
+          "EAC":"A",
+          "description": "An ability to apply knowledge of mathematics, science, and engineering.",
+          "rubrics": [ "Applications: Mathematics",
+                      "Applications: Science",
+                      "Mathematical Modeling" ]
+        },
+        {
+          "CAC":"C",
+          "EAC":"C",
+          "description": "An ability to design a system, component, or process to meet desired needs within realistic constraints such as economic, environmental, social, political, ethical, health and safety, manufacturability, and sustainability.",
+          "rubrics": [ "Develop design requirements from the problem statement that meet desired needs",
+                   "Identify relevant, realistic design constraints from the design requirements",
+                   "Produce a design that satisfies design requirements within relevant, realistic constraints" ]
+        },
+        {
+          "CAC":"D",
+          "EAC":"none",
+          "description": "An ability to function on multidisciplinary teams.",
+          "rubrics": [ "Contribution to team effort",
+                   "Team communication",
+                   "Support of team members",
+                   "Addressing conflict" ]
+        },
+        {
+          "CAC":"B",
+          "EAC":"E",
+          "description": "An ability to identify, formulate, and solve engineering problems.",
+          "rubrics": [ "Identify problem",
+                   "Formulate problem",
+                   "Solve problem" ]
+        },
+        {
+          "CAC":"none",
+          "EAC":"G",
+          "description": "Ability to communicate effectively",
+          "rubrics": [ "Written: Content",
+                   "Written: Structure and Mechanics",
+                   "Oral: Content",
+                   "Oral: Delivery" ]
+        }
+      ]
+    }, 
+    {
+      "course": "cse5343", 
+      "instructor": "fontenot", 
+      "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
+      "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"],  
+      "outcomes": [
+        {
+          "CAC":"C",
+          "EAC":"C",
+          "description": "An ability to design a system, component, or process to meet desired needs within realistic constraints such as economic, environmental, social, political, ethical, health and safety, manufacturability, and sustainability.",
+          "rubrics": [ "Develop design requirements from the problem statement that meet desired needs",
+                   "Identify relevant, realistic design constraints from the design requirements",
+                   "Produce a design that satisfies design requirements within relevant, realistic constraints" ]
+        },
+        {
+          "CAC":"none",
+          "EAC":"E",
+          "description": "An ability to identify, formulate, and solve engineering problems.",
+          "rubrics": [ "Identify problem",
+                   "Formulate problem",
+                   "Solve problem" ]
+        },
+        {
+          "CAC":"none",
+          "EAC":"G",
+          "description": "Ability to communicate effectively",
+          "rubrics": [ "Written: Content",
+                   "Written: Structure and Mechanics",
+                   "Oral: Content",
+                   "Oral: Delivery" ]
+        }
+      ]
+    },
+    {
+      "course": "cse4345",
+      "instructor": "coyle", 
+      "studentsCAC": ["Jessica Yeh", "Story Zanetti"],
+      "studentsEAC": ["Jordan Kayse"], 
+      "outcomes": [
+        {
+          "CAC":"B",
+          "EAC":"E",
+          "description": "An ability to design and conduct experiments, as well as to analyze and interpret data.",
+          "rubrics": [ "Design Experiments",
+                   "Conduct Experiments",
+                   "Analyze Data",
+                   "Interpret Data" ]
+        },
+        {
+          "CAC":"none",
+          "EAC":"I",
+          "description": "Recognition of the need for, and an ability to engage in life-long learning.",
+          "rubrics": [ "Identify incentives for life-long learning",
+                   "Identify sources of knowledge" ]
+        }
+      ]
+    }
+  ]
+}
