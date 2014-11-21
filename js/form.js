@@ -1,8 +1,7 @@
 var courses = [];
 var user = "coyle";
 var tableHeader = "<tr><th></th><th>1 (Weak)</th><th>2 (Poor)</th><th>3 (Good)</th><th>4 (Excellent)</th><th>Unused</th></tr>";
-var tableColumns = "<td><input type='number' name='points' min='0' step='1' value='0'></td>";
-
+var tableColumns = "<td><input type='number' name='points' min='0' step='1' value='0' prev='0'></td>";
 
 $(document).on('ready', function() {
 	getCourses(function() {
@@ -15,6 +14,11 @@ $(document).on('ready', function() {
 		$('.side_bar ul li').removeClass('selected');
 		$(this).addClass('selected');
 		populateForm();
+	});
+
+	$(document).on('change', 'table.report_table tr td input', function(event) {
+		var index = $('table.report_table tr').index($(this).parent().parent());
+		updateStudentCount($(this), index);
 	});
 });
 
@@ -103,7 +107,9 @@ function populateOutcomes(outcomes) {
 
 function populateStudents(studentsEAC, studentsCAC) {
 	$(".EACStudentCount").html(studentsEAC.length);
+	$(".EACStudentCount").attr('count', studentsEAC.length);
 	$(".CACStudentCount").html(studentsCAC.length);
+	$(".CACStudentCount").attr('count', studentsCAC.length);
 
 	var student_html ="CpE Students: ";
 	for(var i = 0; i < studentsEAC.length ; i++){
@@ -134,14 +140,14 @@ function populateTable(outcome, outcome_number) {
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
-			table += "<td class='CACStudentCount'></td></tr>";
+			table += "<td class='CACStudentCount' count='0'></td></tr>";
 		}
 		table += "</table><p class='CACStudents'></p>"
 		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table'>" + tableHeader;
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
-			table += "<td class='EACStudentCount'></td></tr>";
+			table += "<td class='EACStudentCount' count='0'></td></tr>";
 		}
 		table += "</table><p class='EACStudents'></p>"
 	}
@@ -151,7 +157,7 @@ function populateTable(outcome, outcome_number) {
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
-			table += "<td class='EACStudentCount'></td></tr>";
+			table += "<td class='EACStudentCount' count='0'></td></tr>";
 		}
 		table += "</table><p class='EACStudents'></p>"	
 	}
@@ -161,7 +167,7 @@ function populateTable(outcome, outcome_number) {
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
-			table += "<td class='CACStudentCount'></td></tr>";
+			table += "<td class='CACStudentCount' count='0'></td></tr>";
 		}
 		table += "</table><p class='CACStudents'></p>"	
 	}
@@ -170,4 +176,25 @@ function populateTable(outcome, outcome_number) {
 	div_html += table;
 	div_html += "<p class='notes'>The above evaluation is based on:</p><textarea rows='4' cols='50'></textarea></article></div>";
 	$('div#tabs').append(div_html);
+}
+
+function updateStudentCount(input, row_index) {
+	var data = $('tr').eq(row_index).children('td:not([class*="StudentCount"])');
+	var total_students = Number($('tr').eq(row_index).children('td[class*="StudentCount"]').attr('count'));
+
+	var sum = 0;
+
+	for(var i = 0; i < data.length; i++) {
+		sum += Number(data.eq(i).children().val());
+	}
+
+	var difference = total_students - sum;
+
+	if(difference < 0) {
+		var previous_value = Number(input.attr('prev'));
+		input.val(previous_value);
+	}
+	else {
+		$('tr').eq(row_index).children('td[class*="StudentCount"]').html(difference);
+	}
 }
