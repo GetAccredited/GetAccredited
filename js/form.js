@@ -39,7 +39,7 @@ function getUser(callback) {
         	var name = output.name;
         	user = name.split(" ");
         	user = user[user.length-1];
-        	
+
             callback();
         }
     });
@@ -131,6 +131,10 @@ function populateOutcomes(outcomes) {
 
 		tab_HTML += '<li title="' + outcomes[i].description + '"><a href="#outcome' + i + '"><span>' + name + '</span></a></li>';
 		populateTable(outcomes[i], i);
+	}
+	if(outcomes.length == 0){
+		$('#form').prepend('<p class="no_courses">No outcomes are needed in this class for ' + getSemester() + '.</p>')
+		$('#form input.button').addClass('disabled');
 	}
 
 	$('div#tabs ul').append(tab_HTML);
