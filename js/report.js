@@ -12,6 +12,9 @@ $(document).on('ready', function() {
 		else {
 			$(this).addClass('selected');
 		}
+
+        var selected = $('.side_bar ul li.selected');
+        populateReport(selected);
 	});
 });
 
@@ -55,6 +58,10 @@ function populateOutcomes(callback) {
         }
 
     });
+}
 
-
+function populateReport(outcomes) {
+    for(var i = 0; i < outcomes.length; i++) {
+        
+    }
 }

@@ -78,12 +78,15 @@ main {
     border: 0;
     border-radius: 3px;
     font-size: 1.5em;
-    cursor: pointer;
     width: 200px;
     height: 50px;
 }
 
-.button:hover {
+.button:not(.disabled) {
+    cursor: pointer;
+}
+
+.button:not(.disabled):hover {
     background-color: rgba(100, 193, 252, 1);
 }
 
@@ -158,7 +161,7 @@ form#login #login_password {
     text-align: center;
 }
 
-.side_bar ul li:hover {
+.side_bar ul li:not(.void):hover {
     background-color: rgba(3, 124, 167, .1);
     cursor: pointer;
 }
@@ -268,9 +271,10 @@ table.report_table .v_table_header {
 
 textarea{
     resize: none;
-    width: 842px;
+    width: 825px;
     border: none;
     margin-bottom: 20px;
+    padding: 10px;
 }
 
 .form_tabs {
@@ -311,4 +315,12 @@ table.report_table th:not(:first-of-type) {
 
 .notes {
     margin-top: 35px;
+}
+
+.no_courses {
+    text-align: center;
+}
+
+#form input.button.disabled {
+    background-color: #ccc;
 }

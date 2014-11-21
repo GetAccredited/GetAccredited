@@ -1,17 +1,20 @@
 var courses = [];
-var user = "coyle";
+var user = "";
 var tableHeader = "<tr><th></th><th>1 (Weak)</th><th>2 (Poor)</th><th>3 (Good)</th><th>4 (Excellent)</th><th>Unused</th></tr>";
 var tableColumns = "<td><input type='number' name='points' min='0' step='1' value='0' prev='0'></td>";
 
 $(document).on('ready', function() {
-	getCourses(function() {
-		populateClasses(function() {
-			populateForm();
+	getUser(function(){
+		getCourses(function() {
+			populateClasses(function() {
+				populateForm();
+			});
 		});
 	});
+	
 	$( "#tabs" ).tabs();
 
-	$(document).on('click', '.side_bar ul li', function(event) {
+	$(document).on('click', '.side_bar ul li:not(.void)', function(event) {
 		$('.side_bar ul li').removeClass('selected');
 		$(this).addClass('selected');
 		populateForm();
@@ -21,15 +24,33 @@ $(document).on('ready', function() {
 		var index = $('table.report_table tr').index($(this).parent().parent());
 		updateStudentCount($(this), index);
 	});
+
+	$(document).on('click', 'input.button:not(.disabled)', function(event) {
+		// Save or submit
+	});
 });
+
+function getUser(callback) {
+	$.ajax({
+        type: "GET",
+        url: "api/getLoggedInUser",
+        success: function(output) {
+        	output = JSON.parse(output);
+        	var name = output.name;
+        	user = name.split(" ");
+        	user = user[user.length-1].toLowerCase();
+
+            callback();
+        }
+    });
+}
 
 function getCourses(callback) {
 	$.ajax({
         type: "POST",
         url: "api/getCourses",
         data: {
-        	//eventually replace with instructors name
-            instructor: 'fontenot',
+            instructor: user,
         },
         success: function(output) {
         	output = JSON.parse(output);
@@ -58,6 +79,10 @@ function populateClasses(callback) {
 		}
 	}
 
+	if(courses.length === 0) {
+		course_HTML += "<li class='void'>No courses</li>";
+	}
+
 	$("section#courses ul").append(course_HTML);
 
 	callback();
@@ -67,20 +92,27 @@ function populateForm() {
 	$('div#tabs').html("<ul></ul>");
 	var selected_course = $('section#courses ul li.selected').attr('name');
 	var semester = getSemester();
-	$.ajax({
-        type: "POST",
-        url: "api/getForm",
-        data: {
-        	course: selected_course,
-            semester: semester
-        },
-        success: function(output) {
-        	output = JSON.parse(output);
-            console.log(output);
-			populateOutcomes(output.outcomes);
-			populateStudents(output.studentsEAC, output.studentsCAC);
-        }
-    });
+
+	if(selected_course != undefined) {
+		$.ajax({
+	        type: "POST",
+	        url: "api/getForm",
+	        data: {
+	        	course: selected_course,
+	            semester: semester
+	        },
+	        success: function(output) {
+	        	output = JSON.parse(output);
+	            console.log(output);
+				populateOutcomes(output.outcomes);
+				populateStudents(output.studentsEAC, output.studentsCAC);
+	        }
+	    });
+	}
+	else {
+		$('#form').prepend('<p class="no_courses">You do not teach any ABET courses.</p>')
+		$('#form input.button').addClass('disabled');
+	}
 }
 
 function populateOutcomes(outcomes) {
