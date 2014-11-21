@@ -197,5 +197,6 @@ function updateStudentCount(input, row_index) {
 	}
 	else {
 		$('tr').eq(row_index).children('td[class*="StudentCount"]').html(difference);
+		input.attr('prev', input.val());
 	}
 }
