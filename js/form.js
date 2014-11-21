@@ -1,5 +1,8 @@
 var courses = [];
 var user = "coyle";
+var tableHeader = "<tr><th></th><th>1 (Weak)</th><th>2 (Poor)</th><th>3 (Good)</th><th>4 (Excellent)</th><th>Unused</th></tr>";
+var tableColumns = "<td><input type='number' name='points' min='0' step='1' value='0'></td>";
+
 
 $(document).on('ready', function() {
 	getCourses(function() {
@@ -13,7 +16,6 @@ $(document).on('ready', function() {
 		$(this).addClass('selected');
 		populateForm();
 	});
-	$( "#tabs" ).tabs();
 });
 
 function getCourses(callback) {
@@ -22,7 +24,7 @@ function getCourses(callback) {
         url: "api/getCourses",
         data: {
         	//eventually replace with instructors name
-            instructor: 'coyle',
+            instructor: 'fontenot',
         },
         success: function(output) {
         	output = JSON.parse(output);
@@ -57,20 +59,28 @@ function populateClasses(callback) {
 }
 
 function populateForm() {
-	var selected_course = $('section#courses ul li.selected').attr('name');
+	$('div#tabs').html("<ul></ul>");
 
-	for(var i = 0; i < courses.length; i++) {
-		if(courses[i].course === selected_course) {
-			populateOutcomes(i);
-			populateStudents(i);
-		}
-	}
+	var selected_course = $('section#courses ul li.selected').attr('name');
+	var semester = getSemester();
+	$.ajax({
+        type: "POST",
+        url: "api/getForm",
+        data: {
+        	course: selected_course,
+            semester: semester
+        },
+        success: function(output) {
+        	output = JSON.parse(output);
+            console.log(output);
+			populateOutcomes(output.outcomes);
+			populateStudents(output.studentsEAC, output.studentsCAC);
+        }
+    });
 }
 
-function populateOutcomes(course_index) {
-	var outcomes = courses[course_index].outcomes;
+function populateOutcomes(outcomes) {
 	var tab_HTML = "";
-
 	for(var i = 0; i < outcomes.length; i++) {
 		var name = "";
 		if(outcomes[i].CAC != "none" && outcomes[i].EAC != "none"){
@@ -83,12 +93,81 @@ function populateOutcomes(course_index) {
 			name = "CAC-" + outcomes[i].CAC;
 		}
 
-		tab_HTML += '<li><a href="#outcome' + i + '"><span>' + name + '</span></a></li>';
+		tab_HTML += '<li title="' + outcomes[i].description + '"><a href="#outcome' + i + '"><span>' + name + '</span></a></li>';
+		populateTable(outcomes[i], i);
 	}
 
-	// $('div#tabs ul').append(tab_HTML);
+	$('div#tabs ul').append(tab_HTML);
+	$( "#tabs" ).tabs();
 }
 
-function populateStudents(course_index) {
+function populateStudents(studentsEAC, studentsCAC) {
+	$(".EACStudentCount").html(studentsEAC.length);
+	$(".CACStudentCount").html(studentsCAC.length);
 
+	var student_html ="CpE Students: ";
+	for(var i = 0; i < studentsEAC.length ; i++){
+		if(i != 0){
+			student_html += ", ";
+		}
+		student_html += studentsEAC[i];
+	}
+	$(".EACStudents").html(student_html);
+	var student_html ="CS Students: ";
+	for(var i = 0; i < studentsCAC.length ; i++){
+		if(i != 0){
+			student_html += ", ";
+		}
+		student_html += studentsCAC[i];
+	}
+	$(".CACStudents").html(student_html);
+}
+
+function populateTable(outcome, outcome_number) {
+	var div_html = "<div id='outcome" + outcome_number + "'><article class='form_tabs'>";
+	var name = "";
+	var table= "";
+	var rubrics = outcome.rubrics;
+	if(outcome.CAC != "none" && outcome.EAC != "none"){
+		name = "CAC-" + outcome.CAC + "/EAC-" + outcome.EAC;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table'>" + tableHeader;
+		for(var i = 0; i < rubrics.length; i++){
+			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
+			table += tableColumns + tableColumns + tableColumns + tableColumns;
+			table += "<td class='CACStudentCount'></td></tr>";
+		}
+		table += "</table><p class='CACStudents'></p>"
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table'>" + tableHeader;
+		for(var i = 0; i < rubrics.length; i++){
+			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
+			table += tableColumns + tableColumns + tableColumns + tableColumns;
+			table += "<td class='EACStudentCount'></td></tr>";
+		}
+		table += "</table><p class='EACStudents'></p>"
+	}
+	else if(outcome.CAC === "none") {
+		name = "EAC-" + outcome.EAC;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table'>" + tableHeader;
+		for(var i = 0; i < rubrics.length; i++){
+			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
+			table += tableColumns + tableColumns + tableColumns + tableColumns;
+			table += "<td class='EACStudentCount'></td></tr>";
+		}
+		table += "</table><p class='EACStudents'></p>"	
+	}
+	else {
+		name = "CAC-" + outcome.CAC;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table'>" + tableHeader;
+		for(var i = 0; i < rubrics.length; i++){
+			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
+			table += tableColumns + tableColumns + tableColumns + tableColumns;
+			table += "<td class='CACStudentCount'></td></tr>";
+		}
+		table += "</table><p class='CACStudents'></p>"	
+	}
+	name += ": " + outcome.description;
+	div_html += "<h3>" + name + "</h3>";
+	div_html += table;
+	div_html += "<p class='notes'>The above evaluation is based on:</p><textarea rows='4' cols='50'></textarea></article></div>";
+	$('div#tabs').append(div_html);
 }
