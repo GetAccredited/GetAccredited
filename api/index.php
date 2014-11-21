@@ -43,9 +43,12 @@ function getForm() {
         $match = $outcomeMatchups->findOne(array('CAC' => $CACOutcome), array('EAC'=>1,'_id'=>0));
         if(in_array($match["EAC"], $EACOutcomes)){
             array_push($bothOutcomes, array('EAC' => $match["EAC"], 'CAC'=>$CACOutcome));
+            $key = array_search($CACOutcome, $CACOutcomes);
+            unset($CACOutcomes[$key]);
+            $key = array_search($match["EAC"], $EACOutcomes);
+            unset($EACOutcomes[$key]);
         }
     }
-
 
     echo '{"studentsEAC" : '. json_encode($course['studentsEAC']) . ', "studentsCAC" : ' . json_encode($course['studentsCAC']);
     echo ', "outcomes" : [';
@@ -111,7 +114,7 @@ function getOutcomes() {
     global $db;
 
     $outcomeDB = $db->outcomedescriptionandrubrics;
-    $outcomes = $outcomeDB->find(array(), array('type','outcome','description'=>1, '_id'=>0));
+    $outcomes = $outcomeDB->find(array(), array('type'=>1,'outcome'=>1,'description'=>1, '_id'=>0));
 
     echo '{"Outcomes": [ ';
     $i = 0;
