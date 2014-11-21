@@ -1,20 +1,148 @@
 {
   "RosterWithOutcomes": [
     {
-      "course": "cse3342",
-      "instructor": "coyle", 
-      "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
-      "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"], 
-      "CACOutcomes": ["A", "C"],
-      "EACOutcomes": ["D", "E", "G"] 
+      "course": "CSE 1341",
+      "instructor": "Resendis", 
+      "studentsCAC": ["Nicholas Howard", "Eric Sanderson", "Gordon Gill", "Adrian Watson", "Ella King", "Kevin Duncan", "Paul Hamilton", "Stephen Miller", "Brandon Turner", "Blake Welch"],
+      "studentsEAC": ["John Young", "Warren Paige", "Nicola Roberts", "Leah Gill", "Oliver Bond", "Stephen Mitchell", "Adam Manning", "Gabrielle Stewart", "Jennifer Wallace", "Yvonne Hamilton", "Jessica Parr"], 
+      "CACOutcomes": ["B"],
+      "EACOutcomes": ["E", "K"] 
     }, 
     {
-      "course": "cse5343", 
-      "instructor": "fontenot", 
-      "studentsCAC": ["Roolo Berger", "Marcy Klaust"],
-      "studentsEAC": ["Wilfed Barry", "Maxmillian Schell"],  
-      "CACOutcomes": ["C", "D"], 
-      "EACOutcomes": ["D"] 
-    } 
+      "course": "CSE 1342", 
+      "instructor": "Resendis", 
+      "studentsCAC": ["Claire Wilkins", "Sebastian Edmunds", "Oliver Anderson", "Warren Paige", "James Carr", "Austin Parr", "Amanda Peake", "Amanda Hill", "Charles Thomson", "Stewart Morrison", "Brian Pullman"],
+      "studentsEAC": ["Irene Arnold", "Nicola Roberts", "Gavin Ross", "Gabrielle Stewart", "Ian Clarkson"],  
+      "CACOutcomes": ["A", "B", "G", "I", "K"], 
+      "EACOutcomes": ["E", "G", "H", "K"] 
+    }, 
+    {
+      "course": "CSE 2240", 
+      "instructor": "Evans", 
+      "studentsCAC": ["Nicholas Howard", "Brian Pullman", "Dan Bower", "Mary Simpson", "Deirdre Springer", "Kimberly Blake"],
+      "studentsEAC": ["Peter Ogden", "Ella Vance", "Austin Parr", "Joshua Allan", "Angela Slater", "Wanda Mills", "Christopher Gill", "Victor Morgan"],  
+      "CACOutcomes": ["A", "B", "C", "I"], 
+      "EACOutcomes": ["A", "C", "E", "K"] 
+    }, 
+    {
+      "course": "CSE 2341", 
+      "instructor": "Fontenot", 
+      "studentsCAC": ["Heather Sanderson", "Katherine Young", "Gordon Sutherland", "Zoe Powell", "Yvonne Piper", "Lily Gray", "Joe Clarkson", "Jack Powell", "Nathan Black"],
+      "studentsEAC": ["Claire Wilkins", "Molly McLean", "Peter Ogden", "Ella McGrath", "Charles McDonald", "Stephen Miller", "Diana Oliver", "John Sutherland", "Paul Hamilton"],  
+      "CACOutcomes": ["A", "B", "F"], 
+      "EACOutcomes": ["B", "F"] 
+    }, 
+    {
+      "course": "CSE 3330", 
+      "instructor": "Fontenot", 
+      "studentsCAC": ["David Oliver", "Rose Kerr", "Pippa Dyer", "Jake Vaughan", "Max Ross", "Claire Wilkins", "Jack Powell", "Stephen Mitchell", "Blake Ferguson"],
+      "studentsEAC": [],  
+      "CACOutcomes": ["C", "G"], 
+      "EACOutcomes": [] 
+    }, 
+    {
+      "course": "CSE 3342", 
+      "instructor": "Coyle", 
+      "studentsCAC": ["Kylie MacLeod", "Maria Paterson", "Megan Oliver", "Ian Clarkson", "Leah Johnston", "Blake Jackson", "Katherine Young", "John Sutherland", "Natalie Jones", "Lily Gray", "John Sharp", "Warren Paige"],
+      "studentsEAC": [],  
+      "CACOutcomes": ["C", "F"], 
+      "EACOutcomes": [] 
+    }, 
+    {
+      "course": "CSE 3345", 
+      "instructor": "Raley", 
+      "studentsCAC": ["Justin Campbell", "Katherine Young", "Madeleine James", "Wanda Dyer", "Kevin Poole", "Sean Bond", "Evan Blake"],
+      "studentsEAC": ["Leonard Lambert", "Megan Anderson", "Austin Terry"],  
+      "CACOutcomes": ["F", "I"], 
+      "EACOutcomes": ["G", "K"] 
+    }, 
+    {
+      "course": "CSE 3353", 
+      "instructor": "Moore", 
+      "studentsCAC": ["Heather Sanderson", "Jake Harris", "Leah North", "Theresa Davidson", "Carl Rees", "Virginia Cameron"],
+      "studentsEAC": ["Joseph Ogden", "James Mitchell", "Rebecca Knox", "Fiona Quinn", "Theresa Gray"],  
+      "CACOutcomes": ["A", "C", "J"], 
+      "EACOutcomes": ["A"] 
+    }, 
+    {
+      "course": "CSE 3381", 
+      "instructor": "Dworak", 
+      "studentsCAC": ["Kylie MacLeod", "James Tucker", "Jake Vaughan", "Ella Vance", "Oliver Hunter"],
+      "studentsEAC": ["James Tucker", "Ella McGrath", "Leonard Lambert", "Joshua Allan", "Nathan Black", "Trevor Allan", "Blake Ferguson", "Blake Welch", "John Lewis"],  
+      "CACOutcomes": ["C"], 
+      "EACOutcomes": ["A", "C", "G", "K"] 
+    }, 
+    {
+      "course": "CSE 4344", 
+      "instructor": "Engels", 
+      "studentsCAC": ["Deirdre Peters", "Elizabeth Kelly", "Max Ross", "Leonard Abraham", "Natalie Jones", "Jake Harris", "Lisa Johnston", "Eric Stewart"],
+      "studentsEAC": ["Charles Thomson", "Madeleine Mathis", "Andrea Russell", "Vanessa Jones", "Heather Sanderson", "Paul Hamilton", "Grace Henderson", "David Oliver", "Jacob Glover"],  
+      "CACOutcomes": ["C", "F"], 
+      "EACOutcomes": ["C", "E"] 
+    }, 
+    {
+      "course": "CSE 4345", 
+      "instructor": "Coyle", 
+      "studentsCAC": ["Ian King", "Jason Robertson", "Leah Gill", "Sean Bond", "Julia Ross", "Boris King", "Irene Arnold"],
+      "studentsEAC": ["Jack Powell", "Oliver Bond"],  
+      "CACOutcomes": ["C", "D", "F"], 
+      "EACOutcomes": ["G"] 
+    }, 
+    {
+      "course": "CSE 4351", 
+      "instructor": "Evans", 
+      "studentsCAC": ["Kevin Poole", "Megan Anderson", "Grace Henderson", "James Tucker", "Justin Campbell", "Jason Davies", "Max Ross", "Jack Baker", "Heather Sanderson", "Ella King", "Brandon Turner"],
+      "studentsEAC": ["Joshua Campbell", "Rebecca Knox", "Dorothy Henderson", "Joseph Ogden", "Adrian Parr", "Gavin Reid"],  
+      "CACOutcomes": ["A", "C", "D", "E", "F", "I", "K"], 
+      "EACOutcomes": ["D", "F"] 
+    }, 
+    {
+      "course": "CSE 4352", 
+      "instructor": "Evans", 
+      "studentsCAC": ["Irene Arnold", "Nicola Roberts", "Peter Ogden", "Gordon Gill", "Adrian Parr", "Jason Davies", "Zoe Sutherland", "Vanessa Rees", "Thomas Scott"],
+      "studentsEAC": ["Adam Manning", "Natalie Wallace", "Grace Howard", "Alison Gray", "Dan Bower", "Warren Paige", "Blake Ferguson"],  
+      "CACOutcomes": ["A", "C", "D", "E", "F", "G", "H", "I", "K"], 
+      "EACOutcomes": ["E", "H"] 
+    }, 
+    {
+      "course": "CSE 4360", 
+      "instructor": "Szygenda", 
+      "studentsCAC": ["Jane Hudson", "Vanessa Jones", "Carl Rees", "Wendy Lyman", "Christopher Thomson", "Gavin Reid", "Virginia Cameron"],
+      "studentsEAC": ["Charles Thomson", "Austin Parr", "John Sharp", "Fiona Quinn", "Yvonne Hamilton", "Sean Bond", "Mary Marshall"],  
+      "CACOutcomes": ["D", "E", "F"], 
+      "EACOutcomes": ["D", "F", "I"] 
+    }, 
+    {
+      "course": "CSE 4381", 
+      "instructor": "Dworak", 
+      "studentsCAC": ["James Slater", "Wendy Lyman", "Karen Vance", "Dan Bower", "Molly McLean", "Grace Gray", "Mary Marshall", "Leah Hudson", "Ian Clarkson"],
+      "studentsEAC": ["Jake Harris", "Angela Lee", "Mary Ogden", "Claire Piper", "Diana Rees", "Peter Ogden", "John Lewis", "William Mackenzie", "Dorothy Henderson"],  
+      "CACOutcomes": ["B", "C", "G", "J"], 
+      "EACOutcomes": ["A", "C", "E", "K"] 
+    }, 
+    {
+      "course": "CSE 5317", 
+      "instructor": "McBride", 
+      "studentsCAC": [],
+      "studentsEAC": ["Grace Howard", "Max Ross", "Stephen Hart", "Stephanie Vaughan", "Maria Paterson", "Amanda Hill", "Sue Black", "Theresa Gray", "Joe Clarkson", "John Young"],  
+      "CACOutcomes": [], 
+      "EACOutcomes": ["C", "G", "J"] 
+    },
+    {
+      "course": "CSE 5343", 
+      "instructor": "Evans", 
+      "studentsCAC": ["Madeleine Mathis", "John Sharp", "Anna Mills", "Jake Harris", "Oliver Hunter", "David Davidson", "Jason Davies"],
+      "studentsEAC": ["Adrian Parr", "Paul Hamilton", "Brian Pullman", "Owen Jones", "Ian Clarkson", "Angela Lee", "Natalie Jones", "Joshua Terry", "Fiona Quinn"],  
+      "CACOutcomes": ["C", "F", "G", "H"], 
+      "EACOutcomes": ["B", "C", "G", "H", "I", "J", "K"] 
+    }, 
+    {
+      "course": "CSE 5387", 
+      "instructor": "Thornton", 
+      "studentsCAC": [],
+      "studentsEAC": ["Kevin Poole", "Tim Davies", "Oliver Hunter", "Warren Paige", "Paul Hamilton", "Max Ross", "Ava Ince", "Gabrielle Stewart", "Leah Gill"],  
+      "CACOutcomes": [], 
+      "EACOutcomes": ["C", "K"] 
+    }
   ]
 }
