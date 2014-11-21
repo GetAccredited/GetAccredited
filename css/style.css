@@ -136,7 +136,8 @@ form#login #login_password {
 
 .side_bar {
     width: 300px;
-    height: 100%;
+    top: 64px;
+    bottom: 0;
     background-color: rgba(198, 236, 249, 1);
     border-right: 2px solid rgba(188, 226, 239, 1);
     display: inline-block;
