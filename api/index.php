@@ -77,7 +77,7 @@ function getForm() {
         } else {
             $i++;
         }
-        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description'=>1,'rubrics'=>1, '_id'=>0));
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "EAC", 'outcome' => $EACOutcome), array('description'=>1,'rubrics'=>1, '_id'=>0));
         echo '{"CAC" : "none", "EAC" : "' . $EACOutcome . '", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
     }
     echo ']}';

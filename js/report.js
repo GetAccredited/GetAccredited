@@ -12,6 +12,9 @@ $(document).on('ready', function() {
 		else {
 			$(this).addClass('selected');
 		}
+
+        var selected = $('.side_bar ul li.selected');
+        populateReport(selected);
 	});
 });
 
@@ -51,8 +54,14 @@ function populateOutcomes(callback) {
                 course_HTML += "<li id='" + output[k].type + "-" + output[k].outcome +"' title='" + output[k].description + "'>" + output[k].type + "-" + output[k].outcome + "</li>"
             }
             $("section#outcomes ul").append(course_HTML);
+            callback();
         }
-    });
 
-    callback();
+    });
+}
+
+function populateReport(outcomes) {
+    for(var i = 0; i < outcomes.length; i++) {
+        
+    }
 }
