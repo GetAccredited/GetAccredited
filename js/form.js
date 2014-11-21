@@ -38,8 +38,8 @@ function getUser(callback) {
         	output = JSON.parse(output);
         	var name = output.name;
         	user = name.split(" ");
-        	user = user[user.length-1].toLowerCase();
-
+        	user = user[user.length-1];
+        	
             callback();
         }
     });
