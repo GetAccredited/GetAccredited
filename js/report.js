@@ -51,8 +51,10 @@ function populateOutcomes(callback) {
                 course_HTML += "<li id='" + output[k].type + "-" + output[k].outcome +"' title='" + output[k].description + "'>" + output[k].type + "-" + output[k].outcome + "</li>"
             }
             $("section#outcomes ul").append(course_HTML);
+            callback();
         }
+
     });
 
-    callback();
+
 }

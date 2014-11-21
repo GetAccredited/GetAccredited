@@ -9,6 +9,7 @@ $(document).on('ready', function() {
 			populateForm();
 		});
 	});
+	$( "#tabs" ).tabs();
 
 	$(document).on('click', '.side_bar ul li', function(event) {
 		$('.side_bar ul li').removeClass('selected');
@@ -64,7 +65,6 @@ function populateClasses(callback) {
 
 function populateForm() {
 	$('div#tabs').html("<ul></ul>");
-
 	var selected_course = $('section#courses ul li.selected').attr('name');
 	var semester = getSemester();
 	$.ajax({
@@ -102,6 +102,7 @@ function populateOutcomes(outcomes) {
 	}
 
 	$('div#tabs ul').append(tab_HTML);
+	$("#tabs").tabs("destroy");
 	$( "#tabs" ).tabs();
 }
 
