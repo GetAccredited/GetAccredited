@@ -16,6 +16,10 @@ body {
     font-family: 'Oxygen', sans-serif;
 }
 
+p {
+    white-space: normal;
+}
+
 header {
     background-color: rgba(3, 124, 167, 1);
     border-bottom: 2px solid rgba(0, 104, 147, 1);
@@ -313,14 +317,15 @@ table.report_table th:not(:first-of-type) {
     width: 100px;
 }
 
-.notes {
-    margin-top: 35px;
-}
-
 .no_courses {
     text-align: center;
 }
 
 #form input.button.disabled {
     background-color: #ccc;
+}
+
+p.CACStudents, p.EACStudents {
+    width: 846px;
+    margin-bottom: 40px;
 }

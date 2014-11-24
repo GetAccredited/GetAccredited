@@ -25,8 +25,11 @@ $(document).on('ready', function() {
 		updateStudentCount($(this), index);
 	});
 
-	$(document).on('click', 'input.button:not(.disabled)', function(event) {
-		// Save or submit
+	// When the not-disabled Submit button is clicked
+	$(document).on('click', '#submitForm:not(.disabled)', function(event) {
+		if (!isFormCompleted()) {
+			alert("Please finish filling out the form!");
+		}
 	});
 });
 
@@ -110,7 +113,7 @@ function populateForm() {
 	    });
 	}
 	else {
-		$('#form').prepend('<p class="no_courses">You do not teach any ABET courses.</p>')
+		$('#form').prepend('<p class="no_courses">You do not teach any ABET courses.</p>');
 		$('#form input.button').addClass('disabled');
 	}
 }
@@ -212,7 +215,7 @@ function populateTable(outcome, outcome_number) {
 	name += ": " + outcome.description;
 	div_html += "<h3>" + name + "</h3>";
 	div_html += table;
-	div_html += "<p class='notes'>The above evaluation is based on:</p><textarea rows='4' cols='50'></textarea></article></div>";
+	div_html += "<p>The above evaluation is based on:</p><textarea class='notes' rows='4'></textarea></article></div>";
 	$('div#tabs').append(div_html);
 }
 
@@ -236,4 +239,27 @@ function updateStudentCount(input, row_index) {
 		$('tr').eq(row_index).children('td[class*="StudentCount"]').html(difference);
 		input.attr('prev', input.val());
 	}
+}
+
+// Return true if the form is completely filled out, and false otherwise.
+function isFormCompleted() {
+	// Get the total count of all of the "unused" student counts
+	var studentCountTotal = 0;
+	$(".CACStudentCount").add(".EACStudentCount").each(function() {
+		studentCountTotal += Number($(this).html());
+	});
+
+	// If not all of the student counts are used, then the form isn't filled out
+	if (studentCountTotal != 0) {
+		return false;
+	}
+
+	// Check that all of the notes are filled out
+	$(".notes").each(function() {
+		if ($(this).val() === "") {
+			return false;
+		}
+	});
+
+	return true;
 }
