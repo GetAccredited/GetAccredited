@@ -34,6 +34,8 @@ $(document).on('ready', function() {
 		}
 
 		var formJSON = formToJSON();
+		// TODO: actually submit to mongodb
+		console.log(formJSON);
 	});
 });
 
@@ -246,6 +248,8 @@ function updateStudentCount(input, row_index) {
 
 // Return true if the form is completely filled out, and false otherwise.
 function isFormCompleted() {
+	var complete = true;
+
 	// Get the total count of all of the "unused" student counts
 	var studentCountTotal = 0;
 	$(".CACStudentCount").add(".EACStudentCount").each(function() {
@@ -254,17 +258,17 @@ function isFormCompleted() {
 
 	// If not all of the student counts are used, then the form isn't filled out
 	if (studentCountTotal != 0) {
-		return false;
+		complete = false;
 	}
 
 	// Check that all of the notes are filled out
 	$(".notes").each(function() {
 		if ($(this).val() === "") {
-			return false;
+			complete = false;
 		}
 	});
 
-	return true;
+	return complete;
 }
 
 // Converts the contents of the form to JSON
@@ -279,15 +283,38 @@ function formToJSON() {
 	// Compile the results in each outcome
 	form.results = [];
 	$("#form .ui-tabs-anchor span").each(function(index) {
-		// An outcome string that looks like "EAC-A"
+		// An outcome string that looks like "EAC-A" or "CAC-A/EAC-A"
 		var outcomeStr = $(this).html();
+		var dashIndex = outcomeStr.indexOf('-');
 
-		var result = new Object();
+		// Get the outcome, type, and notes
+		var type = outcomeStr.substring(0, dashIndex);
+		var outcome = outcomeStr.substring(dashIndex+1, dashIndex+2);
+		var notes = $("#outcome" + index + " .notes").val();
 
-		result.outcome = outcomeStr.substring(outcomeStr.indexOf('-')+1);
-		result.type = outcomeStr.substring(0, outcomeStr.indexOf('-'));
+		// Process each table in the current outcome
+		$("#form #outcome" + index + " .report_table").each(function() {
+			var result = new Object();
+			result.type = type;
+			result.outcome = outcome;
+			result.notes = notes;
+			result.numbers = [];
 
-		form.results.push(result);
+			// Process each row in the current table
+			$(this).find("tr:not(:first-of-type)").each(function() {
+				var rubric = [];
+
+				// Process each column in the current row
+				$(this).find("td:not(:last-of-type) input").each(function() {
+					rubric.push(Number($(this).val()));
+				});
+
+				result.numbers.push(rubric);
+			});
+
+			form.results.push(result);
+		});
+
 	});
 
 	return JSON.stringify(form);
