@@ -27,9 +27,13 @@ $(document).on('ready', function() {
 
 	// When the not-disabled Submit button is clicked
 	$(document).on('click', '#submitForm:not(.disabled)', function(event) {
+		// Display an error if the form isn't complete
 		if (!isFormCompleted()) {
 			alert("Please finish filling out the form!");
+			return;
 		}
+
+		var formJSON = formToJSON();
 	});
 });
 
@@ -106,7 +110,6 @@ function populateForm() {
 	        },
 	        success: function(output) {
 	        	output = JSON.parse(output);
-	            console.log(output);
 				populateOutcomes(output.outcomes);
 				populateStudents(output.studentsEAC, output.studentsCAC);
 	        }
@@ -262,4 +265,30 @@ function isFormCompleted() {
 	});
 
 	return true;
+}
+
+// Converts the contents of the form to JSON
+function formToJSON() {
+	var form = new Object();
+
+	// Get the semester, course, and instructor
+	form.semester = $("#courses .subtitle").html();
+	form.course = $("#courses .selected").html();
+	form.instructor = $("#user").html();
+
+	// Compile the results in each outcome
+	form.results = [];
+	$("#form .ui-tabs-anchor span").each(function(index) {
+		// An outcome string that looks like "EAC-A"
+		var outcomeStr = $(this).html();
+
+		var result = new Object();
+
+		result.outcome = outcomeStr.substring(outcomeStr.indexOf('-')+1);
+		result.type = outcomeStr.substring(0, outcomeStr.indexOf('-'));
+
+		form.results.push(result);
+	});
+
+	return JSON.stringify(form);
 }
