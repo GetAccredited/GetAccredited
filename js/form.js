@@ -121,25 +121,26 @@ function populateOutcomes(outcomes) {
 		var name = "";
 		if(outcomes[i].CAC != "none" && outcomes[i].EAC != "none"){
 			name = "CAC-" + outcomes[i].CAC + "/EAC-" + outcomes[i].EAC;
-		}
-		else if(outcomes[i].CAC === "none") {
+		} else if(outcomes[i].CAC === "none") {
 			name = "EAC-" + outcomes[i].EAC;
-		}
-		else {
+		} else {
 			name = "CAC-" + outcomes[i].CAC;
 		}
 
 		tab_HTML += '<li title="' + outcomes[i].description + '"><a href="#outcome' + i + '"><span>' + name + '</span></a></li>';
 		populateTable(outcomes[i], i);
 	}
-	if(outcomes.length == 0){
-		$('#form').prepend('<p class="no_courses">No outcomes are needed in this class for ' + getSemester() + '.</p>')
+	if(outcomes.length == 0) {
+		$('#emptyForm').html('<p class="no_courses">No outcomes are needed in this class for ' + getSemester() + '.</p>');
 		$('#form input.button').addClass('disabled');
+	} else {
+		$('#emptyForm').html('');
+		$('div#tabs ul').html(tab_HTML);
+		$("#tabs").tabs("destroy");
+		$( "#tabs" ).tabs();
+		$('#form input.button').removeClass('disabled');
 	}
 
-	$('div#tabs ul').append(tab_HTML);
-	$("#tabs").tabs("destroy");
-	$( "#tabs" ).tabs();
 }
 
 function populateStudents(studentsEAC, studentsCAC) {
