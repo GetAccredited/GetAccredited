@@ -273,15 +273,9 @@ function isFormCompleted() {
 
 // Converts the contents of the form to JSON
 function formToJSON() {
-	var form = new Object();
-
-	// Get the semester, course, and instructor
-	form.semester = $("#courses .subtitle").html();
-	form.course = $("#courses .selected").html();
-	form.instructor = $("#user").html();
+	var form = [];
 
 	// Compile the results in each outcome
-	form.results = [];
 	$("#form .ui-tabs-anchor span").each(function(index) {
 		// An outcome string that looks like "EAC-A" or "CAC-A/EAC-A"
 		var outcomeStr = $(this).html();
@@ -312,7 +306,7 @@ function formToJSON() {
 				result.numbers.push(rubric);
 			});
 
-			form.results.push(result);
+			form.push(result);
 		});
 
 	});
