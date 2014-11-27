@@ -16,6 +16,7 @@ $app->post('/getForm', 'getForm');
 $app->post('/getCourses', 'getCourses');
 $app->get('/getOutcomes', 'getOutcomes');
 $app->post('/getSelectedOutcomes', 'getSelectedOutcomes');
+$app->post('/generateReport', 'generateReport');
 $app->run();
 
 
@@ -125,6 +126,20 @@ function getOutcomes() {
     echo json_encode(array('Outcomes' => $outcomes));
 }
 
+// Returns a single outcome. Used internally by generateReport()
+function getOutcome($type, $outcome) {
+    global $db;
+
+    // Select the collection
+    $outcomeDB = $db->outcomedescriptionandrubrics;
+
+    // Query the collection
+    $outcome = $outcomeDB->findOne(array('type' => $type, 'outcome' => $outcome), 
+                    array('_id'=>0));
+
+    return $outcome;
+}
+
 function getSelectedOutcomes(){ 
     global $db;
 
@@ -178,4 +193,91 @@ function getUserAndLogin() {
     echo $user;
 }
 
+// Generate the report based on which outcomes are selected
+function generateReport() {
+    global $db;
+
+    // hardcoded JSON input, for now
+    $data = '["CAC-A/EAC-A", "CAC-H"]';
+    $data = json_decode($data);
+
+    // Select the collection
+    $collection = $db->formdata;
+
+    // Compile the info for the report table for each outcome
+    $report = Array();
+    foreach ($data as $typeAndOutcome) {
+        // Parse out the type and outcome
+        $type = substr($typeAndOutcome, 0, 3);
+        $outcome = substr($typeAndOutcome, 4, 1);
+
+        // Query the collection
+        $formData = $collection->find(array('type' => $type, 'outcome' => $outcome), 
+                        array('numbers' => 1, '_id' => 0));
+
+        // Sum the numbers from each form
+        $rubrics = null;
+        foreach ($formData as $singleForm) {
+            // Removes the outer wrapper array that was messing with things
+            $singleForm = reset($singleForm);
+
+            if ($rubrics == null) {
+                $rubrics = $singleForm;
+            } else {
+                for ($i = 0; $i < count($rubrics); $i++) {
+                    $rubrics[$i][0] += $singleForm[$i][0];
+                    $rubrics[$i][1] += $singleForm[$i][1];
+                    $rubrics[$i][2] += $singleForm[$i][2];
+                    $rubrics[$i][3] += $singleForm[$i][3];
+                }
+            }
+        }
+
+        // Sum the numbers in each column of each rubric to get the overall
+        array_unshift($rubrics, array(0, 0, 0, 0));
+        for ($i = 1; $i < count($rubrics); $i++) {
+            $rubrics[0][0] += $rubrics[$i][0];
+            $rubrics[0][1] += $rubrics[$i][1];
+            $rubrics[0][2] += $rubrics[$i][2];
+            $rubrics[0][3] += $rubrics[$i][3];
+        }
+
+        // Convert the counts to percentages
+        foreach ($rubrics as &$rubric) {
+            $sum = array_sum($rubric);
+            $rubric = array_map(function($num) use ($sum) {
+                          return round($num/$sum, 3)*100;
+                      }, $rubric);
+        }
+
+        // Calculate the %S+E column
+        foreach ($rubrics as &$rubric) {
+            $sAndE = $rubric[2] + $rubric[3];
+            array_push($rubric, $sAndE);
+        }
+
+        // Get the descriptions for the outcome
+        $outcomeDesc = getOutcome($type, $outcome);
+        
+        // Compile the final output
+        $table = Array();
+        $table['outcome'] = $typeAndOutcome;
+        $table['description'] = $outcomeDesc['description'];
+        $table['results'] = Array();
+        for ($i = 0; $i < count($rubrics); $i++) {
+            $result = Array();
+            if ($i == 0) {
+                $result['description'] = "Outcome " . $typeAndOutcome;
+            } else {
+                $result['description'] = $outcomeDesc['rubrics'][$i-1];
+            }
+            $result['percentages'] = $rubrics[$i];
+            array_push($table['results'], $result);
+        }
+
+        array_push($report, $table);
+    }
+    
+    echo json_encode($report);
+}
 ?>
