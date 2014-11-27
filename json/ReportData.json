@@ -1,0 +1,54 @@
+[
+    {
+        "outcome": "CAC-A/EAC-A",
+        "description": "An ability to apply knowledge of computing and mathematics appropriate to the discipline.",
+        "results": [
+            {
+                "description": "Outcome CAC-A/EAC-A",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Terms",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Calculation",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Application: Mathematics",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Mathematical Modeling",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Theory",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            }
+        ]
+    },
+    {
+        "outcome": "CAC-H",
+        "description": "Recognition of the need for and an ability to engage in continuing professional development.",
+        "results": [
+            {
+                "description": "Outcome CAC-H",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Professional development activities",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Transfer materials and/or concepts",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            },
+            {
+                "description": "Reference material sources",
+                "percentages": [ 2.9, 4.9, 5.1, 87.1, 92.3 ]
+            }
+        ]
+    }
+]
