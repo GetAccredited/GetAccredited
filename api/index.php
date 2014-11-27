@@ -89,23 +89,21 @@ function getForm() {
 function getCourses() {
     global $db;
 
+    // Get the POST data (instructor's last name)
     $instructor = Slim::getInstance()->request()->post('instructor');
 
+    // Select the collection
     $classRoster = $db->rosterwithoutcomes;
-    $courses = $classRoster->find(array('instructor' => $instructor), array('course'=>1, '_id'=>0));
 
-    echo '{"RosterWithOutcomes": [ ';
-    $i = 0;
-    foreach($courses as $course) {
-        if($i != 0) {
-            echo ',';
-        } else {
-            $i++;
-        }
-        echo json_encode($course);
-    }
-    echo ']}';
+    // Query the collection
+    $courses = $classRoster->find(array('instructor' => $instructor), 
+                    array('course'=>1, '_id'=>0));
 
+    // Convert the iterator to an array
+    $courses = iterator_to_array($courses);
+
+    // Print out the JSON
+    echo json_encode(array('RosterWithOutcomes' => $courses));
 }
 
 
@@ -113,39 +111,44 @@ function getCourses() {
 function getOutcomes() {
     global $db;
 
+    // Select the collection
     $outcomeDB = $db->outcomedescriptionandrubrics;
-    $outcomes = $outcomeDB->find(array(), array('type'=>1,'outcome'=>1,'description'=>1, '_id'=>0));
 
-    echo '{"Outcomes": [ ';
-    $i = 0;
-    foreach($outcomes as $outcome) {
-        if($i != 0) {
-            echo ',';
-        } else {
-            $i++;
-        }
-        echo json_encode($outcome);
-    }
-    echo ']}';
-    
+    // Query the collection
+    $outcomes = $outcomeDB->find(array(), array('type'=>1, 'outcome'=>1, 
+                    'description'=>1, '_id'=>0));
+
+    // Convert the iterator to an array
+    $outcomes = iterator_to_array($outcomes);
+
+    // Print out the JSON
+    echo json_encode(array('Outcomes' => $outcomes));
 }
 
 function getSelectedOutcomes(){ 
     global $db;
 
+    // Get the POST data (ex: Fall2014)
     $semester = Slim::getInstance()->request()->post('semester');
 
+    // Select the collection
     $semesterOutcomes = $db->cycleofoutcomes;
-    $outcomes = $semesterOutcomes->findOne(array('semester' => $semester), array('CACOutcomes'=>1, 'EACOutcomes'=>1, '_id'=>0));
 
+    // Query the collection
+    $outcomes = $semesterOutcomes->findOne(array('semester' => $semester), 
+                    array('CACOutcomes'=>1, 'EACOutcomes'=>1, '_id'=>0));
+
+    // Print out the JSON
     echo json_encode($outcomes);
     
 }
 
+// Logout the user by deleting the session variable contents
 function logout() {
     unset($_SESSION['user']);
 }
 
+// Return the info for the currently logged in user, or null if not logged in
 function getLoggedInUser() {
     if (isset($_SESSION['user'])) {
         echo $_SESSION['user'];
@@ -154,9 +157,8 @@ function getLoggedInUser() {
     }
 }
 
-
-function getUserAndLogin(){
-
+// Verify the email/password of a user, then log them in if correct
+function getUserAndLogin() {
     global $db;
 
     // Get the email and password from the POST
