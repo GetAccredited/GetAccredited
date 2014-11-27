@@ -9,15 +9,42 @@ $app = new Slim();
 $m = new MongoClient("mongodb://$dbhost");
 $db = $m->$dbname;
 
+
+// Verify the email/password of a user, then log them in if correct
+// Input: email
+// Input: password
 $app->post('/getUserAndLogin', 'getUserAndLogin');
+
+// Return the info for the currently logged in user, or null if not logged in
 $app->get('/getLoggedInUser', 'getLoggedInUser');
+
+// Logout the user by deleting the session variable contents
 $app->get('/logout', 'logout');
+
+// Returns JSON for the form
+// Input: semester
+// Input: course
 $app->post('/getForm', 'getForm');
+
+// Returns the list of courses based on the instructor
+// Input: instructor (ex: Coyle)
 $app->post('/getCourses', 'getCourses');
+
+// Returns the list of outcomes
 $app->get('/getOutcomes', 'getOutcomes');
+
+// Get the outcomes for a chosen semester
+// Input: semester (ex: Fall2014)
 $app->post('/getSelectedOutcomes', 'getSelectedOutcomes');
+
+// Generate the report based on which outcomes are selected
+// Sample input JSON: ["CAC-A/EAC-A", "CAC-H"]
+// To test, go to Postman and use a POST and click on "raw" and put the JSON there
 $app->post('/generateReport', 'generateReport');
+
+
 $app->run();
+
 
 
 function getForm() {
@@ -86,7 +113,6 @@ function getForm() {
 }
 
 
-//Returns the list of courses based on the instructor
 function getCourses() {
     global $db;
 
@@ -108,7 +134,6 @@ function getCourses() {
 }
 
 
-//Returns the list of outcomes
 function getOutcomes() {
     global $db;
 
@@ -126,6 +151,7 @@ function getOutcomes() {
     echo json_encode(array('Outcomes' => $outcomes));
 }
 
+
 // Returns a single outcome. Used internally by generateReport()
 function getOutcome($type, $outcome) {
     global $db;
@@ -139,6 +165,7 @@ function getOutcome($type, $outcome) {
 
     return $outcome;
 }
+
 
 function getSelectedOutcomes(){ 
     global $db;
@@ -158,12 +185,12 @@ function getSelectedOutcomes(){
     
 }
 
-// Logout the user by deleting the session variable contents
+
 function logout() {
     unset($_SESSION['user']);
 }
 
-// Return the info for the currently logged in user, or null if not logged in
+
 function getLoggedInUser() {
     if (isset($_SESSION['user'])) {
         echo $_SESSION['user'];
@@ -172,7 +199,7 @@ function getLoggedInUser() {
     }
 }
 
-// Verify the email/password of a user, then log them in if correct
+
 function getUserAndLogin() {
     global $db;
 
@@ -193,20 +220,19 @@ function getUserAndLogin() {
     echo $user;
 }
 
-// Generate the report based on which outcomes are selected
+
 function generateReport() {
     global $db;
 
-    // hardcoded JSON input, for now
-    $data = '["CAC-A/EAC-A", "CAC-H"]';
-    $data = json_decode($data);
+    // Get POST data and decode the JSON
+    $outcomes = json_decode(Slim::getInstance()->request()->getBody());
 
     // Select the collection
     $collection = $db->formdata;
 
     // Compile the info for the report table for each outcome
     $report = Array();
-    foreach ($data as $typeAndOutcome) {
+    foreach ($outcomes as $typeAndOutcome) {
         // Parse out the type and outcome
         $type = substr($typeAndOutcome, 0, 3);
         $outcome = substr($typeAndOutcome, 4, 1);
@@ -277,7 +303,7 @@ function generateReport() {
 
         array_push($report, $table);
     }
-    
+
     echo json_encode($report);
 }
 ?>
