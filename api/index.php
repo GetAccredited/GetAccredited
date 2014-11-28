@@ -237,11 +237,16 @@ function generateReport() {
     $report = Array();
     foreach ($outcomes as $typeAndOutcome) {
         // Parse out the type and outcome
-        $type = substr($typeAndOutcome, 0, 3);
-        $outcome = substr($typeAndOutcome, 4, 1);
+        $type1 = substr($typeAndOutcome, 0, 3);
+        $outcome1 = substr($typeAndOutcome, 4, 1);
+        $type2 = substr($typeAndOutcome, 6, 3);
+        $outcome2 = substr($typeAndOutcome, 10, 1);
 
         // Query the collection
-        $formData = $collection->find(array('type' => $type, 'outcome' => $outcome), 
+        $formData = $collection->find(array('$or' => array(
+                            array('type' => $type1, 'outcome' => $outcome1),
+                            array('type' => $type2, 'outcome' => $outcome2)
+                        )), 
                         array('numbers' => 1, '_id' => 0));
         $formDataCount = $formData->count();
 
@@ -292,7 +297,7 @@ function generateReport() {
         }
         
         // Get the descriptions for the outcome
-        $outcomeDesc = getOutcome($type, $outcome);
+        $outcomeDesc = getOutcome($type1, $outcome1);
         
         // Compile the final output
         $table = Array();
