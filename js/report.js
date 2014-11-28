@@ -30,7 +30,7 @@ function populateOutcomesForSemester(semester) {
             output = JSON.parse(output);
 
     		for(var k = 0; k < output.length; k++) {
-    			$('#'+output[k]).addClass("selected");
+                $(document.getElementById(output[k])).addClass("selected");
     		}
             populateReport($('.side_bar ul li.selected'));
         }
@@ -47,12 +47,11 @@ function populateOutcomes(callback) {
             output = output.Outcomes
             var course_HTML = "";
             for(var k = 0; k < output.length; k++) {
-                course_HTML += "<li id='" + output[k].name.replace('/','') +"' title='" + output[k].description + "'>" + output[k].name + "</li>";
+                course_HTML += "<li id='" + output[k].name +"' title='" + output[k].description + "'>" + output[k].name + "</li>";
             }
             $("section#outcomes ul").append(course_HTML);
             callback();
         }
-
     });
 }
 

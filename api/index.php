@@ -202,7 +202,7 @@ function getSelectedOutcomes(){
             array_push($finalOutcomes, "CAC-".$outcome);
         }
         else{
-            array_push($finalOutcomes, "CAC-".$outcome."EAC-".$match['EAC']);
+            array_push($finalOutcomes, "CAC-".$outcome."/EAC-".$match['EAC']);
         }
     }
     foreach($outcomes['CACOutcomes'] as $outcome) {
