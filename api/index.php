@@ -277,6 +277,9 @@ function generateReport() {
             foreach ($rubrics as &$rubric) {
                 $sum = array_sum($rubric);
                 $rubric = array_map(function($num) use ($sum) {
+                              if ($sum == 0) {
+                                  return 0;
+                              }
                               return round($num/$sum, 3)*100;
                           }, $rubric);
             }
