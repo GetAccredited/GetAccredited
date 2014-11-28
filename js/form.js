@@ -120,7 +120,7 @@ function populateForm() {
 	        	output = JSON.parse(output);
 				populateOutcomes(output.outcomes);
 				populateStudents(output.studentsEAC, output.studentsCAC);
-				populateData();
+				populateData(output.outcomes);
 	        }
 	    });
 	}
@@ -195,7 +195,7 @@ function populateTable(outcome, outcome_number) {
 
 	if(outcome.CAC != "none" && outcome.EAC != "none"){
 		name = "CAC-" + outcome.CAC + "/EAC-" + outcome.EAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -204,7 +204,7 @@ function populateTable(outcome, outcome_number) {
 		}
 
 		table += "</table><p class='CACStudents'></p>"
-		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table'>" + tableHeader;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -216,7 +216,7 @@ function populateTable(outcome, outcome_number) {
 	}
 	else if(outcome.CAC === "none") {
 		name = "EAC-" + outcome.EAC;
-		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -227,7 +227,7 @@ function populateTable(outcome, outcome_number) {
 	}
 	else {
 		name = "CAC-" + outcome.CAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
 
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -334,7 +334,6 @@ function formToJSON(completed) {
 			form.push(result);
 		}
 	});
-
 	return JSON.stringify(form);
 }
 
@@ -351,18 +350,10 @@ function saveForm(formJSON) {
 	    });
 }
 
-function populateData() {
+function populateData(outcomes) {
 	var course = $('section#courses ul li.selected').attr('name');
 
-	// var name = "";
-
-	// if(outcomes[i].CAC != "none" && outcomes[i].EAC != "none"){
-	// 	name = "CAC-" + outcomes[i].CAC + "/EAC-" + outcomes[i].EAC;
-	// } else if(outcomes[i].CAC === "none") {
-	// 	name = "EAC-" + outcomes[i].EAC;
-	// } else {
-	// 	name = "CAC-" + outcomes[i].CAC;
-	// }
+	var formData = null;
 
 	$.ajax({
 	        type: "POST",
@@ -372,10 +363,23 @@ function populateData() {
 	            instructor: user
 	        },
 	        success: function(output) {
-	        	// output = JSON.parse(output);
-	        	console.log(output);
+	        	formData = JSON.parse(output);
+	        	console.log(formData);
+
+	        	for(var i = 0; i < formData.length; i++) {
+	        		var data = $('#form table[name="' + formData[i].type + '-' + formData[i].outcome + '"] tr');
+					
+					var numbers = formData[i].numbers;
+
+					for(var j = 0; j < numbers.length; j++) {
+						for(var k = 0; k < numbers[j].length; k++) {
+							data.eq(j+1).children().eq(k+1).children().eq(0).val(numbers[j][k]);
+							updateStudentCount(data.eq(j+1).children().eq(k+1).children().eq(0), j+1);
+						}
+					}
+
+					$('#form textarea.notes').val(formData[i].notes);
+				}
 	        }
 	    });
-
-	$("#form div[id*='outcome'] table[name='CAC-A']");
 }

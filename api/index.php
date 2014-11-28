@@ -362,15 +362,27 @@ function getFormInfo() {
     $course = Slim::getInstance()->request()->post('course');
     $instructor = Slim::getInstance()->request()->post('instructor');
 
-    echo $course;
-    echo $instructor;
-
     $collection = $db->formdata;
+    $outcomeMatchups = $db->eacandcacmatchup;
 
-    $outcome = $collection->find(array('instructor' => $instructor, 'course' => $course));
+    $result = $collection->find(array('instructor' => $instructor, 'course' => $course), 
+                                array('_id'=>0));
 
-    var_dump($outcome);
+    $outcomes = Array();
 
-    echo json_encode($outcome);
+    foreach($result as $singleOutcome) {
+        if($singleOutcome["type"] == "EAC") {
+            $match = $outcomeMatchups->findOne(array('CAC' => $singleOutcome["outcome"], 'EAC' => $singleOutcome["outcome"]));
+            
+            if($match == NULL) {
+                array_push($outcomes, $singleOutcome);
+            }
+        }
+        else {
+            array_push($outcomes, $singleOutcome);
+        }
+    }    
+
+    echo json_encode($outcomes);
 }
 ?>
