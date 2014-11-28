@@ -28,15 +28,9 @@ function populateOutcomesForSemester(semester) {
         },
         success: function(output) {
             output = JSON.parse(output);
-            
-            var CAC = output.CACOutcomes;
-    		for(var k = 0; k < CAC.length; k++) {
-    			$('#CAC-' + CAC[k]).addClass("selected");
-    		}
 
-            var EAC = output.EACOutcomes;
-    		for(var k = 0; k < EAC.length; k++) {
-    			$('#EAC-' + EAC[k]).addClass("selected");
+    		for(var k = 0; k < output.length; k++) {
+    			$('#'+output[k]).addClass("selected");
     		}
             populateReport($('.side_bar ul li.selected'));
         }
@@ -53,7 +47,7 @@ function populateOutcomes(callback) {
             output = output.Outcomes
             var course_HTML = "";
             for(var k = 0; k < output.length; k++) {
-                course_HTML += "<li id='" + output[k].type + "-" + output[k].outcome +"' title='" + output[k].description + "'>" + output[k].type + "-" + output[k].outcome + "</li>"
+                course_HTML += "<li id='" + output[k].name.replace('/','') +"' title='" + output[k].description + "'>" + output[k].name + "</li>";
             }
             $("section#outcomes ul").append(course_HTML);
             callback();
@@ -91,7 +85,6 @@ function populateTable(outcome){
     table_html += "<th>Satisfactory</th><th>Exemplary</th><th>% S+E</th></tr>";
     var results = outcome.results;
     for(var i = 0; i < results.length; i++){
-        console.log(results[i]);
         table_html += "<tr><th class='v_table_header'>"+ results[i].description +"</th>";
         if(results[i].percentages !== null){
             table_html += "<td>"+results[i].percentages[0]+"</td><td>"+results[i].percentages[1]+"</td><td>"+results[i].percentages[2]+"</td><td>"+results[i].percentages[3]+"</td><td>"+results[i].percentages[4]+"</td>";

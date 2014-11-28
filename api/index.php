@@ -142,16 +142,26 @@ function getOutcomes() {
 
     // Select the collection
     $outcomeDB = $db->outcomedescriptionandrubrics;
+    $outcomeMatchups = $db->eacandcacmatchup;
 
     // Query the collection
     $outcomes = $outcomeDB->find(array(), array('type'=>1, 'outcome'=>1, 
                     'description'=>1, '_id'=>0));
-
-    // Convert the iterator to an array
-    $outcomes = iterator_to_array($outcomes);
+    
+    //Combine matching outcomes.
+    $finalOutcomes = array();
+    foreach($outcomes as $outcome) {
+        $match = $outcomeMatchups->findOne(array($outcome['type'] => $outcome['outcome']));
+        if($match==null){
+            array_push($finalOutcomes, array('name' => $outcome['type']."-".$outcome['outcome'] , 'description'=>$outcome['description']));
+        }
+        else if($outcome['type'] == "CAC"){
+            array_push($finalOutcomes, array('name' => $outcome['type']."-".$outcome['outcome']."/EAC-".$match['EAC'] , 'description'=>$outcome['description']));
+        }
+    }
 
     // Print out the JSON
-    echo json_encode(array('Outcomes' => $outcomes));
+    echo json_encode(array('Outcomes' => $finalOutcomes));
 }
 
 
@@ -178,13 +188,32 @@ function getSelectedOutcomes(){
 
     // Select the collection
     $semesterOutcomes = $db->cycleofoutcomes;
+    $outcomeMatchups = $db->eacandcacmatchup;
 
     // Query the collection
     $outcomes = $semesterOutcomes->findOne(array('semester' => $semester), 
                     array('CACOutcomes'=>1, 'EACOutcomes'=>1, '_id'=>0));
 
+    //Combine matching outcomes.
+    $finalOutcomes = array();
+    foreach($outcomes['CACOutcomes'] as $outcome) {
+        $match = $outcomeMatchups->findOne(array('CAC' => $outcome));
+        if($match==null){
+            array_push($finalOutcomes, "CAC-".$outcome);
+        }
+        else{
+            array_push($finalOutcomes, "CAC-".$outcome."EAC-".$match['EAC']);
+        }
+    }
+    foreach($outcomes['CACOutcomes'] as $outcome) {
+        $match = $outcomeMatchups->findOne(array('EAC' => $outcome));
+        if($match==null){
+            array_push($finalOutcomes, "EAC-".$outcome);
+        }
+    }
+
     // Print out the JSON
-    echo json_encode($outcomes);
+    echo json_encode($finalOutcomes);
     
 }
 
