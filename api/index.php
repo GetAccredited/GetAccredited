@@ -371,16 +371,7 @@ function getFormInfo() {
     $outcomes = Array();
 
     foreach($result as $singleOutcome) {
-        if($singleOutcome["type"] == "EAC") {
-            $match = $outcomeMatchups->findOne(array('CAC' => $singleOutcome["outcome"], 'EAC' => $singleOutcome["outcome"]));
-            
-            if($match == NULL) {
-                array_push($outcomes, $singleOutcome);
-            }
-        }
-        else {
-            array_push($outcomes, $singleOutcome);
-        }
+        array_push($outcomes, $singleOutcome);
     }    
 
     echo json_encode($outcomes);

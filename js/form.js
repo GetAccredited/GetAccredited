@@ -1,6 +1,6 @@
 var courses = [];
 var user = "";
-var tableHeader = "<tr><th></th><th>1 (Weak)</th><th>2 (Poor)</th><th>3 (Good)</th><th>4 (Excellent)</th><th>Unused</th></tr>";
+var tableHeader = "<tr class='header_row'><th></th><th>1 (Weak)</th><th>2 (Poor)</th><th>3 (Good)</th><th>4 (Excellent)</th><th>Unused</th></tr>";
 var tableColumns = "<td><input type='number' name='points' min='0' step='1' value='0' prev='0'></td>";
 
 $(document).on('ready', function() {
@@ -18,11 +18,18 @@ $(document).on('ready', function() {
 		$('.side_bar ul li').removeClass('selected');
 		$(this).addClass('selected');
 		populateForm();
+		$('#saveForm').val('Save');
+		$('#submitForm').val('Submit');
 	});
 
 	$(document).on('change', 'table.report_table tr td input', function(event) {
 		var index = $('table.report_table tr').index($(this).parent().parent());
 		updateStudentCount($(this), index);
+		$('#saveForm').val('Save');
+	});
+
+	$(document).on('change', 'textarea.notes', function(event){
+		$('#saveForm').val('Save');
 	});
 
 	// When the not-disabled Submit button is clicked
@@ -36,12 +43,14 @@ $(document).on('ready', function() {
 		var formJSON = formToJSON(1);
 		// TODO: actually submit to mongodb
 		saveForm(formJSON);
+		$('#form input.button').addClass('disabled');
 	});
 
 	$(document).on('click', '#saveForm:not(.disabled)', function(event) {
 		var formJSON = formToJSON(0);
 
 		saveForm(formJSON);
+		$('#saveForm').val('Saved');
 	});
 });
 
@@ -195,7 +204,7 @@ function populateTable(outcome, outcome_number) {
 
 	if(outcome.CAC != "none" && outcome.EAC != "none"){
 		name = "CAC-" + outcome.CAC + "/EAC-" + outcome.EAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='CAC-" + outcome.CAC + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -204,7 +213,7 @@ function populateTable(outcome, outcome_number) {
 		}
 
 		table += "</table><p class='CACStudents'></p>"
-		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='EAC-" + outcome.EAC + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -216,7 +225,7 @@ function populateTable(outcome, outcome_number) {
 	}
 	else if(outcome.CAC === "none") {
 		name = "EAC-" + outcome.EAC;
-		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -227,7 +236,7 @@ function populateTable(outcome, outcome_number) {
 	}
 	else {
 		name = "CAC-" + outcome.CAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
 
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -247,7 +256,6 @@ function populateTable(outcome, outcome_number) {
 function updateStudentCount(input, row_index) {
 	var data = $('tr').eq(row_index).children('td:not([class*="StudentCount"])');
 	var total_students = Number($('tr').eq(row_index).children('td[class*="StudentCount"]').attr('count'));
-
 	var sum = 0;
 
 	for(var i = 0; i < data.length; i++) {
@@ -262,7 +270,27 @@ function updateStudentCount(input, row_index) {
 	}
 	else {
 		$('tr').eq(row_index).children('td[class*="StudentCount"]').html(difference);
+		
 		input.attr('prev', input.val());
+	}
+}
+
+function updateAllStudentCounts() {
+	var rows = $('tr:not(.header_row)');
+
+	for(var i = 0; i < rows.length; i++) {
+
+		var data = $('tr:not(.header_row)').eq(i).children('td:not([class*="StudentCount"])');
+		var total_students = Number($('tr:not(.header_row)').eq(i).children('td[class*="StudentCount"]').attr('count'));
+		var sum = 0;
+
+		for(var k = 0; k < data.length; k++) {
+			sum += Number(data.eq(k).children().val());
+		}
+
+		var difference = total_students - sum;
+
+		$('tr:not(.header_row)').eq(i).children('td[class*="StudentCount"]').html(difference);
 	}
 }
 
@@ -367,6 +395,13 @@ function populateData(outcomes) {
 	        	console.log(formData);
 
 	        	for(var i = 0; i < formData.length; i++) {
+	        		if(formData[0].submitted === 1) {
+	        			$('#form input.button').addClass('disabled');
+	        			$('#submitForm').val("Submitted");
+	        			$('#form table input').prop('disabled', true);
+	        			$('#form textarea').prop('disabled', true)
+	        		}
+
 	        		var data = $('#form table[name="' + formData[i].type + '-' + formData[i].outcome + '"] tr');
 					
 					var numbers = formData[i].numbers;
@@ -374,12 +409,13 @@ function populateData(outcomes) {
 					for(var j = 0; j < numbers.length; j++) {
 						for(var k = 0; k < numbers[j].length; k++) {
 							data.eq(j+1).children().eq(k+1).children().eq(0).val(numbers[j][k]);
-							updateStudentCount(data.eq(j+1).children().eq(k+1).children().eq(0), j+1);
 						}
 					}
 
 					$('#form textarea.notes').val(formData[i].notes);
 				}
+
+				updateAllStudentCounts();
 	        }
 	    });
 }
