@@ -1,6 +1,6 @@
 var courses = [];
 var user = "";
-var tableHeader = "<tr><th></th><th>1 (Weak)</th><th>2 (Poor)</th><th>3 (Good)</th><th>4 (Excellent)</th><th>Unused</th></tr>";
+var tableHeader = "<tr class='header_row'><th></th><th>1 (Weak)</th><th>2 (Poor)</th><th>3 (Good)</th><th>4 (Excellent)</th><th>Unused</th></tr>";
 var tableColumns = "<td><input type='number' name='points' min='0' step='1' value='0' prev='0'></td>";
 
 $(document).on('ready', function() {
@@ -256,7 +256,6 @@ function populateTable(outcome, outcome_number) {
 function updateStudentCount(input, row_index) {
 	var data = $('tr').eq(row_index).children('td:not([class*="StudentCount"])');
 	var total_students = Number($('tr').eq(row_index).children('td[class*="StudentCount"]').attr('count'));
-
 	var sum = 0;
 
 	for(var i = 0; i < data.length; i++) {
@@ -271,7 +270,27 @@ function updateStudentCount(input, row_index) {
 	}
 	else {
 		$('tr').eq(row_index).children('td[class*="StudentCount"]').html(difference);
+		
 		input.attr('prev', input.val());
+	}
+}
+
+function updateAllStudentCounts() {
+	var rows = $('tr:not(.header_row)');
+
+	for(var i = 0; i < rows.length; i++) {
+
+		var data = $('tr:not(.header_row)').eq(i).children('td:not([class*="StudentCount"])');
+		var total_students = Number($('tr:not(.header_row)').eq(i).children('td[class*="StudentCount"]').attr('count'));
+		var sum = 0;
+
+		for(var k = 0; k < data.length; k++) {
+			sum += Number(data.eq(k).children().val());
+		}
+
+		var difference = total_students - sum;
+
+		$('tr:not(.header_row)').eq(i).children('td[class*="StudentCount"]').html(difference);
 	}
 }
 
@@ -391,12 +410,12 @@ function populateData(outcomes) {
 						for(var k = 0; k < numbers[j].length; k++) {
 							data.eq(j+1).children().eq(k+1).children().eq(0).val(numbers[j][k]);
 						}
-						updateStudentCount(data.eq(1).children().eq(1).children().eq(0), j+1);
-						updateStudentCount(data.eq(1).children().eq(1).children().eq(0), numbers.length+j+2);
 					}
 
 					$('#form textarea.notes').val(formData[i].notes);
 				}
+
+				updateAllStudentCounts();
 	        }
 	    });
 }
