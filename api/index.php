@@ -243,48 +243,51 @@ function generateReport() {
         // Query the collection
         $formData = $collection->find(array('type' => $type, 'outcome' => $outcome), 
                         array('numbers' => 1, '_id' => 0));
+        $formDataCount = $formData->count();
 
-        // Sum the numbers from each form
         $rubrics = null;
-        foreach ($formData as $singleForm) {
-            // Removes the outer wrapper array that was messing with things
-            $singleForm = reset($singleForm);
+        if ($formDataCount > 0) {
+            // Sum the numbers from each form
+            foreach ($formData as $singleForm) {
+                // Removes the outer wrapper array that was messing with things
+                $singleForm = reset($singleForm);
 
-            if ($rubrics == null) {
-                $rubrics = $singleForm;
-            } else {
-                for ($i = 0; $i < count($rubrics); $i++) {
-                    $rubrics[$i][0] += $singleForm[$i][0];
-                    $rubrics[$i][1] += $singleForm[$i][1];
-                    $rubrics[$i][2] += $singleForm[$i][2];
-                    $rubrics[$i][3] += $singleForm[$i][3];
+                if ($rubrics == null) {
+                    $rubrics = $singleForm;
+                } else {
+                    for ($i = 0; $i < count($rubrics); $i++) {
+                        $rubrics[$i][0] += $singleForm[$i][0];
+                        $rubrics[$i][1] += $singleForm[$i][1];
+                        $rubrics[$i][2] += $singleForm[$i][2];
+                        $rubrics[$i][3] += $singleForm[$i][3];
+                    }
                 }
             }
-        }
 
-        // Sum the numbers in each column of each rubric to get the overall
-        array_unshift($rubrics, array(0, 0, 0, 0));
-        for ($i = 1; $i < count($rubrics); $i++) {
-            $rubrics[0][0] += $rubrics[$i][0];
-            $rubrics[0][1] += $rubrics[$i][1];
-            $rubrics[0][2] += $rubrics[$i][2];
-            $rubrics[0][3] += $rubrics[$i][3];
-        }
+            // Sum the numbers in each column of each rubric to get the overall
+            array_unshift($rubrics, array(0, 0, 0, 0));
+            for ($i = 1; $i < count($rubrics); $i++) {
+                $rubrics[0][0] += $rubrics[$i][0];
+                $rubrics[0][1] += $rubrics[$i][1];
+                $rubrics[0][2] += $rubrics[$i][2];
+                $rubrics[0][3] += $rubrics[$i][3];
+            }
 
-        // Convert the counts to percentages
-        foreach ($rubrics as &$rubric) {
-            $sum = array_sum($rubric);
-            $rubric = array_map(function($num) use ($sum) {
-                          return round($num/$sum, 3)*100;
-                      }, $rubric);
-        }
+            // Convert the counts to percentages
+            foreach ($rubrics as &$rubric) {
+                $sum = array_sum($rubric);
+                $rubric = array_map(function($num) use ($sum) {
+                              return round($num/$sum, 3)*100;
+                          }, $rubric);
+            }
 
-        // Calculate the %S+E column
-        foreach ($rubrics as &$rubric) {
-            $sAndE = $rubric[2] + $rubric[3];
-            array_push($rubric, $sAndE);
+            // Calculate the %S+E column
+            foreach ($rubrics as &$rubric) {
+                $sAndE = $rubric[2] + $rubric[3];
+                array_push($rubric, $sAndE);
+            }
         }
-
+        
         // Get the descriptions for the outcome
         $outcomeDesc = getOutcome($type, $outcome);
         
@@ -293,14 +296,18 @@ function generateReport() {
         $table['outcome'] = $typeAndOutcome;
         $table['description'] = $outcomeDesc['description'];
         $table['results'] = Array();
-        for ($i = 0; $i < count($rubrics); $i++) {
+        for ($i = 0; $i <= count($outcomeDesc['rubrics']); $i++) {
             $result = Array();
             if ($i == 0) {
                 $result['description'] = "Outcome " . $typeAndOutcome;
             } else {
                 $result['description'] = $outcomeDesc['rubrics'][$i-1];
             }
-            $result['percentages'] = $rubrics[$i];
+            if ($rubrics != null) {
+                $result['percentages'] = $rubrics[$i];
+            } else {
+                $result['percentages'] = null;
+            }
             array_push($table['results'], $result);
         }
 
