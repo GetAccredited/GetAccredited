@@ -1,5 +1,4 @@
-{
-  "courses": [
+[
     {
       "course": "cse3342",
       "instructor": "coyle", 
@@ -107,5 +106,4 @@
         }
       ]
     }
-  ]
-}
+]

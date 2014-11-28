@@ -33,9 +33,15 @@ $(document).on('ready', function() {
 			return;
 		}
 
-		var formJSON = formToJSON();
+		var formJSON = formToJSON(1);
 		// TODO: actually submit to mongodb
-		console.log(formJSON);
+		saveForm(formJSON);
+	});
+
+	$(document).on('click', '#saveForm:not(.disabled)', function(event) {
+		var formJSON = formToJSON(0);
+
+		saveForm(formJSON);
 	});
 });
 
@@ -114,6 +120,7 @@ function populateForm() {
 	        	output = JSON.parse(output);
 				populateOutcomes(output.outcomes);
 				populateStudents(output.studentsEAC, output.studentsCAC);
+				populateData();
 	        }
 	    });
 	}
@@ -125,8 +132,10 @@ function populateForm() {
 
 function populateOutcomes(outcomes) {
 	var tab_HTML = "";
+
 	for(var i = 0; i < outcomes.length; i++) {
 		var name = "";
+
 		if(outcomes[i].CAC != "none" && outcomes[i].EAC != "none"){
 			name = "CAC-" + outcomes[i].CAC + "/EAC-" + outcomes[i].EAC;
 		} else if(outcomes[i].CAC === "none") {
@@ -138,6 +147,7 @@ function populateOutcomes(outcomes) {
 		tab_HTML += '<li title="' + outcomes[i].description + '"><a href="#outcome' + i + '"><span>' + name + '</span></a></li>';
 		populateTable(outcomes[i], i);
 	}
+
 	if(outcomes.length == 0) {
 		$('#emptyForm').html('<p class="no_courses">No outcomes are needed in this class for ' + getSemester() + '.</p>');
 		$('#form input.button').addClass('disabled');
@@ -165,6 +175,7 @@ function populateStudents(studentsEAC, studentsCAC) {
 		student_html += studentsEAC[i];
 	}
 	$(".EACStudents").html(student_html);
+
 	var student_html ="CS Students: ";
 	for(var i = 0; i < studentsCAC.length ; i++){
 		if(i != 0){
@@ -180,26 +191,33 @@ function populateTable(outcome, outcome_number) {
 	var name = "";
 	var table= "";
 	var rubrics = outcome.rubrics;
+	// console.log(outcome);
+
 	if(outcome.CAC != "none" && outcome.EAC != "none"){
 		name = "CAC-" + outcome.CAC + "/EAC-" + outcome.EAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
+		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
 			table += "<td class='CACStudentCount' count='0'></td></tr>";
 		}
+
 		table += "</table><p class='CACStudents'></p>"
 		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table'>" + tableHeader;
+		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
 			table += "<td class='EACStudentCount' count='0'></td></tr>";
 		}
+
 		table += "</table><p class='EACStudents'></p>"
 	}
 	else if(outcome.CAC === "none") {
 		name = "EAC-" + outcome.EAC;
-		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table'>" + tableHeader;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
+		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
@@ -209,7 +227,8 @@ function populateTable(outcome, outcome_number) {
 	}
 	else {
 		name = "CAC-" + outcome.CAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
+
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
 			table += tableColumns + tableColumns + tableColumns + tableColumns;
@@ -217,6 +236,7 @@ function populateTable(outcome, outcome_number) {
 		}
 		table += "</table><p class='CACStudents'></p>"	
 	}
+
 	name += ": " + outcome.description;
 	div_html += "<h3>" + name + "</h3>";
 	div_html += table;
@@ -236,7 +256,7 @@ function updateStudentCount(input, row_index) {
 
 	var difference = total_students - sum;
 
-	if(difference < 0) {
+	if(difference < 0 || input.val() < 0) {
 		var previous_value = Number(input.attr('prev'));
 		input.val(previous_value);
 	}
@@ -272,30 +292,35 @@ function isFormCompleted() {
 }
 
 // Converts the contents of the form to JSON
-function formToJSON() {
+function formToJSON(completed) {
 	var form = [];
 
 	// Compile the results in each outcome
 	$("#form .ui-tabs-anchor span").each(function(index) {
 		// An outcome string that looks like "EAC-A" or "CAC-A/EAC-A"
-		var outcomeStr = $(this).html();
-		var dashIndex = outcomeStr.indexOf('-');
+		var outcomeStrs = $(this).html().split('/');
+		
+		for(var i = 0; i < outcomeStrs.length; i++) {
+			var outcomeStr = outcomeStrs[i];
+			var dashIndex = outcomeStr.indexOf('-');
 
-		// Get the outcome, type, and notes
-		var type = outcomeStr.substring(0, dashIndex);
-		var outcome = outcomeStr.substring(dashIndex+1, dashIndex+2);
-		var notes = $("#outcome" + index + " .notes").val();
+			// Get the outcome, type, and notes
+			var type = outcomeStr.substring(0, dashIndex);
+			var outcome = outcomeStr.substring(dashIndex+1, dashIndex+2);
+			var notes = $("#outcome" + index + " .notes").val();
 
-		// Process each table in the current outcome
-		$("#form #outcome" + index + " .report_table").each(function() {
+			// Process each table in the current outcome
 			var result = new Object();
+			result.submitted = completed;
+			result.instructor = user;
+			result.course = $('section#courses ul li.selected').attr('name');
 			result.type = type;
 			result.outcome = outcome;
 			result.notes = notes;
 			result.numbers = [];
 
 			// Process each row in the current table
-			$(this).find("tr:not(:first-of-type)").each(function() {
+			$("#form #outcome" + index + " .report_table").eq(i).find("tr:not(:first-of-type)").each(function() {
 				var rubric = [];
 
 				// Process each column in the current row
@@ -307,9 +332,50 @@ function formToJSON() {
 			});
 
 			form.push(result);
-		});
-
+		}
 	});
 
 	return JSON.stringify(form);
+}
+
+function saveForm(formJSON) {
+	$.ajax({
+	        type: "POST",
+	        url: "api/saveForm",
+	        data: {
+	        	formData: formJSON
+	        },
+	        success: function(output) {
+	        	console.log(output);
+	        }
+	    });
+}
+
+function populateData() {
+	var course = $('section#courses ul li.selected').attr('name');
+
+	// var name = "";
+
+	// if(outcomes[i].CAC != "none" && outcomes[i].EAC != "none"){
+	// 	name = "CAC-" + outcomes[i].CAC + "/EAC-" + outcomes[i].EAC;
+	// } else if(outcomes[i].CAC === "none") {
+	// 	name = "EAC-" + outcomes[i].EAC;
+	// } else {
+	// 	name = "CAC-" + outcomes[i].CAC;
+	// }
+
+	$.ajax({
+	        type: "POST",
+	        url: "api/getFormInfo",
+	        data: {
+	        	course: course,
+	            instructor: user
+	        },
+	        success: function(output) {
+	        	// output = JSON.parse(output);
+	        	console.log(output);
+	        }
+	    });
+
+	$("#form div[id*='outcome'] table[name='CAC-A']");
 }

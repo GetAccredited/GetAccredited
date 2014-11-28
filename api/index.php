@@ -42,6 +42,9 @@ $app->post('/getSelectedOutcomes', 'getSelectedOutcomes');
 // To test, go to Postman and use a POST and click on "raw" and put the JSON there
 $app->post('/generateReport', 'generateReport');
 
+$app->post('/saveForm', 'saveForm');
+
+$app->post('/getFormInfo', 'getFormInfo');
 
 $app->run();
 
@@ -305,5 +308,59 @@ function generateReport() {
     }
 
     echo json_encode($report);
+}
+
+function saveForm() {
+    global $db;
+
+    // Get POST data and decode the JSON
+    $formData = json_decode(Slim::getInstance()->request()->post('formData'));
+
+    $collection = $db->formdata;
+
+    // var_dump($formData);
+
+    foreach ($formData as $singleForm) {
+        var_dump($singleForm);
+        $instructor = $singleForm->instructor;
+        $course = $singleForm->course;
+        $type = $singleForm->type;
+        $outcome = $singleForm->outcome;
+
+        $found = $collection->findOne(array('instructor' => $instructor,
+                                    'course' => $course,
+                                    'type' => $type,
+                                    'outcome' => $outcome));
+
+        if($found === NULL) {
+            $collection->insert($singleForm);
+        }
+        else {
+            $collection->update(array('instructor' => $instructor,
+                                'course' => $course,
+                                'type' => $type,
+                                'outcome' => $outcome),
+                            $singleForm);
+        }
+    }
+}
+
+function getFormInfo() {
+    global $db;
+
+    // Get the POST data
+    $course = Slim::getInstance()->request()->post('course');
+    $instructor = Slim::getInstance()->request()->post('instructor');
+
+    echo $course;
+    echo $instructor;
+
+    $collection = $db->formdata;
+
+    $outcome = $collection->find(array('instructor' => $instructor, 'course' => $course));
+
+    var_dump($outcome);
+
+    echo json_encode($outcome);
 }
 ?>

@@ -1,5 +1,4 @@
-{
-  "RosterWithOutcomes": [
+[
     {
       "course": "CSE 1341",
       "instructor": "Resendis", 
@@ -145,4 +144,3 @@
       "EACOutcomes": ["C", "K"] 
     }
   ]
-}

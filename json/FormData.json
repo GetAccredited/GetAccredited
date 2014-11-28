@@ -1,5 +1,6 @@
 [
     {
+        "course":"cse3342",
         "type": "CAC",
         "outcome": "D",
         "notes": "group project",
