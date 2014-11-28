@@ -18,11 +18,18 @@ $(document).on('ready', function() {
 		$('.side_bar ul li').removeClass('selected');
 		$(this).addClass('selected');
 		populateForm();
+		$('#saveForm').val('Save');
+		$('#submitForm').val('Submit');
 	});
 
 	$(document).on('change', 'table.report_table tr td input', function(event) {
 		var index = $('table.report_table tr').index($(this).parent().parent());
 		updateStudentCount($(this), index);
+		$('#saveForm').val('Save');
+	});
+
+	$(document).on('change', 'textarea.notes', function(event){
+		$('#saveForm').val('Save');
 	});
 
 	// When the not-disabled Submit button is clicked
@@ -36,12 +43,14 @@ $(document).on('ready', function() {
 		var formJSON = formToJSON(1);
 		// TODO: actually submit to mongodb
 		saveForm(formJSON);
+		$('#form input.button').addClass('disabled');
 	});
 
 	$(document).on('click', '#saveForm:not(.disabled)', function(event) {
 		var formJSON = formToJSON(0);
 
 		saveForm(formJSON);
+		$('#saveForm').val('Saved');
 	});
 });
 
@@ -195,7 +204,7 @@ function populateTable(outcome, outcome_number) {
 
 	if(outcome.CAC != "none" && outcome.EAC != "none"){
 		name = "CAC-" + outcome.CAC + "/EAC-" + outcome.EAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='CAC-" + outcome.CAC + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -204,7 +213,7 @@ function populateTable(outcome, outcome_number) {
 		}
 
 		table += "</table><p class='CACStudents'></p>"
-		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='EAC-" + outcome.EAC + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -216,7 +225,7 @@ function populateTable(outcome, outcome_number) {
 	}
 	else if(outcome.CAC === "none") {
 		name = "EAC-" + outcome.EAC;
-		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
 		
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -227,7 +236,7 @@ function populateTable(outcome, outcome_number) {
 	}
 	else {
 		name = "CAC-" + outcome.CAC;
-		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name.split('/')[0] + "'>" + tableHeader;
+		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
 
 		for(var i = 0; i < rubrics.length; i++){
 			table += "<tr><th class='v_table_header'>" + rubrics[i] + "</th>";
@@ -367,6 +376,13 @@ function populateData(outcomes) {
 	        	console.log(formData);
 
 	        	for(var i = 0; i < formData.length; i++) {
+	        		if(formData[0].submitted === 1) {
+	        			$('#form input.button').addClass('disabled');
+	        			$('#submitForm').val("Submitted");
+	        			$('#form table input').prop('disabled', true);
+	        			$('#form textarea').prop('disabled', true)
+	        		}
+
 	        		var data = $('#form table[name="' + formData[i].type + '-' + formData[i].outcome + '"] tr');
 					
 					var numbers = formData[i].numbers;
@@ -374,8 +390,9 @@ function populateData(outcomes) {
 					for(var j = 0; j < numbers.length; j++) {
 						for(var k = 0; k < numbers[j].length; k++) {
 							data.eq(j+1).children().eq(k+1).children().eq(0).val(numbers[j][k]);
-							updateStudentCount(data.eq(j+1).children().eq(k+1).children().eq(0), j+1);
 						}
+						updateStudentCount(data.eq(1).children().eq(1).children().eq(0), j+1);
+						updateStudentCount(data.eq(1).children().eq(1).children().eq(0), numbers.length+j+2);
 					}
 
 					$('#form textarea.notes').val(formData[i].notes);
