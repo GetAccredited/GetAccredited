@@ -321,6 +321,11 @@ function generateReport() {
             // Calculate the %S+E column
             foreach ($rubrics as &$rubric) {
                 $sAndE = $rubric[2] + $rubric[3];
+                // Prevent the sum from exceeding 100
+                if ($sAndE > 100) {
+                    $sAndE = 100;
+                }
+
                 array_push($rubric, $sAndE);
             }
         }
