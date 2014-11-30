@@ -14,20 +14,29 @@ $(document).on('ready', function() {
 	
 	$( "#tabs" ).tabs();
 
+	// When an item in the side bar menu is clicked
 	$(document).on('click', '.side_bar ul li:not(.void)', function(event) {
+		// Deselect the currently selected
 		$('.side_bar ul li').removeClass('selected');
+		// Select current
 		$(this).addClass('selected');
+
+		// Populate form
 		populateForm();
 		$('#saveForm').val('Save');
 		$('#submitForm').val('Submit');
 	});
 
+	// When one of the inputs in a report table is clicked, check if number changed to is legal
 	$(document).on('change', 'table.report_table tr td input', function(event) {
 		var index = $('table.report_table tr').index($(this).parent().parent());
 		updateStudentCount($(this), index);
+
+		// Form needs to be saved again
 		$('#saveForm').val('Save');
 	});
 
+	// If textarea is changed, form needs to be saved again
 	$(document).on('change', 'textarea.notes', function(event){
 		$('#saveForm').val('Save');
 	});
@@ -41,19 +50,21 @@ $(document).on('ready', function() {
 		}
 
 		var formJSON = formToJSON(1);
-		// TODO: actually submit to mongodb
 		saveForm(formJSON);
-		$('#form input.button').addClass('disabled');
+		submitted();
 	});
 
+	// When the save is saved
 	$(document).on('click', '#saveForm:not(.disabled)', function(event) {
 		var formJSON = formToJSON(0);
-
 		saveForm(formJSON);
+
+		// Form is saved
 		$('#saveForm').val('Saved');
 	});
 });
 
+// Get user from database
 function getUser(callback) {
 	$.ajax({
         type: "GET",
@@ -69,6 +80,7 @@ function getUser(callback) {
     });
 }
 
+// Get courses from database
 function getCourses(callback) {
 	$.ajax({
         type: "POST",
@@ -89,6 +101,7 @@ function getCourses(callback) {
     });
 }
 
+// Populates list of classes in the side bar
 function populateClasses(callback) {
 	var course_HTML = "";
 
@@ -112,6 +125,7 @@ function populateClasses(callback) {
 	callback();
 }
 
+// Gets outcomes for currently selected course
 function populateForm() {
 	$('div#tabs').html("<ul></ul>");
 	var selected_course = $('section#courses ul li.selected').attr('name');
@@ -127,9 +141,11 @@ function populateForm() {
 	        },
 	        success: function(output) {
 	        	output = JSON.parse(output);
+
+	        	// Calls functions to populate form
 				populateOutcomes(output.outcomes);
 				populateStudents(output.studentsEAC, output.studentsCAC);
-				populateData(output.outcomes);
+				populateData();
 	        }
 	    });
 	}
@@ -139,6 +155,7 @@ function populateForm() {
 	}
 }
 
+// Populates the outcomes for a form
 function populateOutcomes(outcomes) {
 	var tab_HTML = "";
 
@@ -170,6 +187,7 @@ function populateOutcomes(outcomes) {
 
 }
 
+// Populates the names for students for a form
 function populateStudents(studentsEAC, studentsCAC) {
 	$(".EACStudentCount").html(studentsEAC.length);
 	$(".EACStudentCount").attr('count', studentsEAC.length);
@@ -195,6 +213,7 @@ function populateStudents(studentsEAC, studentsCAC) {
 	$(".CACStudents").html(student_html);
 }
 
+// Creates the tables for the form
 function populateTable(outcome, outcome_number) {
 	var div_html = "<div id='outcome" + outcome_number + "'><article class='form_tabs'>";
 	var name = "";
@@ -202,6 +221,7 @@ function populateTable(outcome, outcome_number) {
 	var rubrics = outcome.rubrics;
 	// console.log(outcome);
 
+	// If the outcome is both CAC and EAC
 	if(outcome.CAC != "none" && outcome.EAC != "none"){
 		name = "CAC-" + outcome.CAC + "/EAC-" + outcome.EAC;
 		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='CAC-" + outcome.CAC + "'>" + tableHeader;
@@ -223,6 +243,7 @@ function populateTable(outcome, outcome_number) {
 
 		table += "</table><p class='EACStudents'></p>"
 	}
+	// If the outcome is only EAC
 	else if(outcome.CAC === "none") {
 		name = "EAC-" + outcome.EAC;
 		table += "<h4>Computer Engineering Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
@@ -234,6 +255,7 @@ function populateTable(outcome, outcome_number) {
 		}
 		table += "</table><p class='EACStudents'></p>"	
 	}
+	// Otherwise, the outcome is only CAC
 	else {
 		name = "CAC-" + outcome.CAC;
 		table = "<h4>Computer Science Undergrads:</h4><table class='report_table' name='" + name + "'>" + tableHeader;
@@ -253,21 +275,27 @@ function populateTable(outcome, outcome_number) {
 	$('div#tabs').append(div_html);
 }
 
+// Update unused column given an jQuery object input and a number row_index
 function updateStudentCount(input, row_index) {
+	// Find the appropriate row and total student number
 	var data = $('tr').eq(row_index).children('td:not([class*="StudentCount"])');
 	var total_students = Number($('tr').eq(row_index).children('td[class*="StudentCount"]').attr('count'));
 	var sum = 0;
 
+	// Iterate over row and get sum of all used
 	for(var i = 0; i < data.length; i++) {
 		sum += Number(data.eq(i).children().val());
 	}
 
 	var difference = total_students - sum;
 
+	// If the difference on the input is invalid
+	// Change the altered input back to old value
 	if(difference < 0 || input.val() < 0) {
 		var previous_value = Number(input.attr('prev'));
 		input.val(previous_value);
 	}
+	// Otherwise, update unused column and prev value for the input
 	else {
 		$('tr').eq(row_index).children('td[class*="StudentCount"]').html(difference);
 		
@@ -275,21 +303,25 @@ function updateStudentCount(input, row_index) {
 	}
 }
 
+// Update all unused columns
 function updateAllStudentCounts() {
 	var rows = $('tr:not(.header_row)');
 
+	// Loop through every row
 	for(var i = 0; i < rows.length; i++) {
 
 		var data = $('tr:not(.header_row)').eq(i).children('td:not([class*="StudentCount"])');
 		var total_students = Number($('tr:not(.header_row)').eq(i).children('td[class*="StudentCount"]').attr('count'));
 		var sum = 0;
 
+		// Sum all the data for that row
 		for(var k = 0; k < data.length; k++) {
 			sum += Number(data.eq(k).children().val());
 		}
 
 		var difference = total_students - sum;
 
+		// Update unused to be the difference
 		$('tr:not(.header_row)').eq(i).children('td[class*="StudentCount"]').html(difference);
 	}
 }
@@ -365,6 +397,8 @@ function formToJSON(completed) {
 	return JSON.stringify(form);
 }
 
+// Receives a JSON of the information in the form
+// Sends this information to the database with an AJAX request
 function saveForm(formJSON) {
 	$.ajax({
 	        type: "POST",
@@ -378,11 +412,14 @@ function saveForm(formJSON) {
 	    });
 }
 
-function populateData(outcomes) {
+// Populates the form with the data from the database
+function populateData() {
+	// Get name of selected course
 	var course = $('section#courses ul li.selected').attr('name');
 
 	var formData = null;
 
+	// AJAX call to get data for course that user has saved in the database
 	$.ajax({
 	        type: "POST",
 	        url: "api/getFormInfo",
@@ -394,28 +431,38 @@ function populateData(outcomes) {
 	        	formData = JSON.parse(output);
 	        	console.log(formData);
 
+	        	// For each outcome in the form
 	        	for(var i = 0; i < formData.length; i++) {
+	        		// If it has been submitted
 	        		if(formData[0].submitted === 1) {
-	        			$('#form input.button').addClass('disabled');
-	        			$('#submitForm').val("Submitted");
-	        			$('#form table input').prop('disabled', true);
-	        			$('#form textarea').prop('disabled', true)
+	        			submitted();
 	        		}
 
 	        		var data = $('#form table[name="' + formData[i].type + '-' + formData[i].outcome + '"] tr');
 					
 					var numbers = formData[i].numbers;
 
+					// Loop through all data in the tables and populate values
 					for(var j = 0; j < numbers.length; j++) {
 						for(var k = 0; k < numbers[j].length; k++) {
 							data.eq(j+1).children().eq(k+1).children().eq(0).val(numbers[j][k]);
 						}
 					}
 
+					// Populate textarea
 					$('#form textarea.notes').val(formData[i].notes);
 				}
 
+				// Update unused student counts
 				updateAllStudentCounts();
 	        }
 	    });
+}
+
+// Function to disable necessary inputs when a form is submitted
+function submitted() {
+	$('#form input.button').addClass('disabled');
+	$('#submitForm').val("Submitted");
+	$('#form table input').prop('disabled', true);
+	$('#form textarea').prop('disabled', true);
 }
