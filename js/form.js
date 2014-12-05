@@ -48,7 +48,7 @@ $(document).on('ready', function() {
 	$(document).on('click', '#submitForm:not(.disabled)', function(event) {
 		// Display an error if the form isn't complete
 		if (!isFormCompleted()) {
-			alert("Please finish filling out the form!");
+			alert("Please finish filling out the form! Make sure you fill out all the tabs.");
 			return;
 		}
 
