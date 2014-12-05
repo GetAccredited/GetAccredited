@@ -71,7 +71,8 @@ function getForm() {
     $EACOutcomes = array_intersect($outcomes['EACOutcomes'], $course['EACOutcomes']);
     $bothOutcomes = array();
     foreach($CACOutcomes as $CACOutcome) {
-        $match = $outcomeMatchups->findOne(array('CAC' => $CACOutcome), array('EAC'=>1,'_id'=>0));
+        $match = $outcomeMatchups->findOne(array('CAC' => $CACOutcome),
+                     array('EAC'=>1,'_id'=>0));
         if(in_array($match["EAC"], $EACOutcomes)){
             array_push($bothOutcomes, array('EAC' => $match["EAC"], 'CAC'=>$CACOutcome));
             $key = array_search($CACOutcome, $CACOutcomes);
@@ -81,38 +82,55 @@ function getForm() {
         }
     }
 
-    echo '{"studentsEAC" : '. json_encode($course['studentsEAC']) . ', "studentsCAC" : ' . json_encode($course['studentsCAC']);
-    echo ', "outcomes" : [';
+    echo '{"studentsEAC" : '. json_encode($course['studentsEAC']) . 
+            ', "studentsCAC" : ' . json_encode($course['studentsCAC']) . 
+            ', "outcomes" : [';
     $i = 0;
+
     foreach($bothOutcomes as $bothOutcome) {
         if($i != 0) {
             echo ',';
         } else {
             $i++;
         }
-        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $bothOutcome['CAC']), array('description'=>1,'rubrics'=>1, '_id'=>0));
-        echo '{"CAC" : "' . $bothOutcome['CAC'] . '", "EAC" : "' . $bothOutcome['EAC'] . '", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 
+                            'outcome' => $bothOutcome['CAC']), 
+                            array('description'=>1,'rubrics'=>1, '_id'=>0));
+        echo '{"CAC" : "' . $bothOutcome['CAC'] . '", "EAC" : "' . 
+                $bothOutcome['EAC'] . '", "description" : '. 
+                json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . 
+                json_encode($outcomeInfo['rubrics']) . ' }';
     }
+
     foreach($CACOutcomes as $CACOutcome) {
         if($i != 0) {
             echo ',';
         } else {
             $i++;
         }
-        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 'outcome' => $CACOutcome), array('description'=>1,'rubrics'=>1, '_id'=>0));
-        echo '{"CAC" : "' . $CACOutcome . '" , "EAC" : "none", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "CAC", 
+                            'outcome' => $CACOutcome), 
+                            array('description'=>1,'rubrics'=>1, '_id'=>0));
+        echo '{"CAC" : "' . $CACOutcome . '" , "EAC" : "none", "description" : ' . 
+                json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . 
+                json_encode($outcomeInfo['rubrics']) . ' }';
     }
+
     foreach($EACOutcomes as $EACOutcome) {
         if($i != 0) {
             echo ',';
         } else {
             $i++;
         }
-        $outcomeInfo = $outcomeDescription->findOne(array('type' => "EAC", 'outcome' => $EACOutcome), array('description'=>1,'rubrics'=>1, '_id'=>0));
-        echo '{"CAC" : "none", "EAC" : "' . $EACOutcome . '", "description" : '. json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . json_encode($outcomeInfo['rubrics']) . ' }';
+        $outcomeInfo = $outcomeDescription->findOne(array('type' => "EAC", 
+                           'outcome' => $EACOutcome), 
+                           array('description'=>1,'rubrics'=>1, '_id'=>0));
+        echo '{"CAC" : "none", "EAC" : "' . $EACOutcome . '", "description" : ' . 
+                json_encode($outcomeInfo['description']) . ' , "rubrics" : ' . 
+                json_encode($outcomeInfo['rubrics']) . ' }';
     }
-    echo ']}';
 
+    echo ']}';
 }
 
 
@@ -150,13 +168,16 @@ function getOutcomes() {
     
     //Combine matching outcomes.
     $finalOutcomes = array();
-    foreach($outcomes as $outcome) {
+    foreach ($outcomes as $outcome) {
         $match = $outcomeMatchups->findOne(array($outcome['type'] => $outcome['outcome']));
-        if($match==null){
-            array_push($finalOutcomes, array('name' => $outcome['type']."-".$outcome['outcome'] , 'description'=>$outcome['description']));
-        }
-        else if($outcome['type'] == "CAC"){
-            array_push($finalOutcomes, array('name' => $outcome['type']."-".$outcome['outcome']."/EAC-".$match['EAC'] , 'description'=>$outcome['description']));
+        if ($match==null) {
+            array_push($finalOutcomes, 
+                array('name' => $outcome['type']."-".$outcome['outcome'], 
+                      'description' => $outcome['description']));
+        } else if ($outcome['type'] == "CAC") {
+            array_push($finalOutcomes, 
+                array('name' => $outcome['type']."-".$outcome['outcome']."/EAC-".$match['EAC'], 
+                      'description'=>$outcome['description']));
         }
     }
 
