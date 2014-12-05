@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	// Put the logged in user's name in the header
 	$.ajax({
 		url: "api/getLoggedInUser",
         dataType: "json",
@@ -11,6 +12,7 @@ $(document).ready(function() {
 		}
 	});
 
+	// Logout the user and redirect to the login page when Logout is pressed
 	$("#logout").click(function() {
 		$.ajax({
 			url: "api/logout",

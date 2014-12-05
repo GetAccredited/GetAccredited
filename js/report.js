@@ -47,7 +47,9 @@ function populateOutcomes(callback) {
             output = output.Outcomes
             var course_HTML = "";
             for(var k = 0; k < output.length; k++) {
-                course_HTML += "<li id='" + output[k].name +"' title='" + output[k].description + "'>" + output[k].name + "</li>";
+                course_HTML += "<li id='" + output[k].name +"' title='" + 
+                                output[k].description + "'>" + output[k].name + 
+                                "</li>";
             }
             $("section#outcomes ul").append(course_HTML);
             callback();
@@ -82,18 +84,26 @@ function populateTable(outcome){
     table_html += outcome.description + "</span><table class='report_table'>";
     table_html += "<tr><th>(%)</th><th>Unsatisfactory</th><th>Developing</th>";
     table_html += "<th>Satisfactory</th><th>Exemplary</th><th>% S+E</th></tr>";
-    var results = outcome.results;
-    for(var i = 0; i < results.length; i++){
-        table_html += "<tr><th class='v_table_header'>"+ results[i].description +"</th>";
-        if(results[i].percentages !== null){
-            table_html += "<td>"+results[i].percentages[0]+"</td><td>"+results[i].percentages[1]+"</td><td>"+results[i].percentages[2]+"</td><td>"+results[i].percentages[3]+"</td><td>"+results[i].percentages[4]+"</td>";
 
-        }
-        else{
+    var results = outcome.results;
+
+    for(var i = 0; i < results.length; i++) {
+        table_html += "<tr><th class='v_table_header'>" + results[i].description + "</th>";
+
+        if(results[i].percentages !== null) {
+            table_html += "<td>" + results[i].percentages[0] + "</td><td>" + 
+                           results[i].percentages[1] + "</td><td>" + 
+                           results[i].percentages[2] + "</td><td>" + 
+                           results[i].percentages[3] + "</td><td>" + 
+                           results[i].percentages[4] + "</td>";
+
+        } else {
             table_html += "<td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>";
         }
+
         table_html += "</tr>";
     }
+    
     table_html += "</table></article>";
     $('#report').append(table_html);
 }
