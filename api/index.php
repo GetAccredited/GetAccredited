@@ -42,8 +42,12 @@ $app->post('/getSelectedOutcomes', 'getSelectedOutcomes');
 // To test, go to Postman and use a POST and click on "raw" and put the JSON there
 $app->post('/generateReport', 'generateReport');
 
+// Saves or updates the form data in the MongoDB
 $app->post('/saveForm', 'saveForm');
 
+// Retrieves the entry in the database for the form with the given inputs
+// Input: course
+// Input: semester
 $app->post('/getFormInfo', 'getFormInfo');
 
 $app->run();
@@ -388,10 +392,7 @@ function saveForm() {
 
     $collection = $db->formdata;
 
-    // var_dump($formData);
-
     foreach ($formData as $singleForm) {
-        var_dump($singleForm);
         $instructor = $singleForm->instructor;
         $course = $singleForm->course;
         $type = $singleForm->type;
@@ -404,8 +405,7 @@ function saveForm() {
 
         if($found === NULL) {
             $collection->insert($singleForm);
-        }
-        else {
+        } else {
             $collection->update(array('instructor' => $instructor,
                                 'course' => $course,
                                 'type' => $type,
