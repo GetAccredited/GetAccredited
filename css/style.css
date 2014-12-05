@@ -189,6 +189,7 @@ form#login #login_password {
 
 .outcome_report {
     padding: 10px;
+    width: 858px;
 }
 
 .outcome_title {
@@ -197,6 +198,7 @@ form#login #login_password {
 
 .outcome_description {
     font-style: italic;
+    white-space: normal;
 }
 
 table.report_table {
