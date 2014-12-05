@@ -282,8 +282,11 @@ function updateStudentCount(input, row_index) {
 	var total_students = Number($('tr').eq(row_index).children('td[class*="StudentCount"]').attr('count'));
 	var sum = 0;
 
-	if($.isNumeric(data)) {
-		data = Math.round(data);
+	var current_val = input.val();
+
+	if($.isNumeric(current_val)) {
+		current_val = Math.round(current_val);
+		input.val(current_val);
 	}
 	else {
 		var previous_value = Number(input.attr('prev'));
